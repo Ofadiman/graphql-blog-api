@@ -1,0 +1,56 @@
+version: '3.7'
+
+services:
+  commercify-api:
+    container_name: commercify-api
+    build:
+      context: .
+      dockerfile: dev.Dockerfile
+      args:
+        - user_id=$UID
+        - group_id=$GID
+        - user=$USER
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+    depends_on:
+      - commercify-db-dev
+      - commercify-db-test
+    links:
+      - commercify-db-dev
+      - commercify-db-test
+    working_dir: /app
+    command: yarn start:debug
+
+  commercify-db-dev:
+    container_name: commercify-db-dev
+    image: library/postgres:13.4-alpine
+    ports:
+      - "5432:5432"
+    volumes:
+      - type: volume
+        source: commercify-db-dev
+        target: /var/lib/postgresql/data/
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+
+  commercify-db-test:
+    container_name: commercify-db-test
+    image: library/postgres:13.4-alpine
+    ports:
+      - "5433:5432"
+    volumes:
+      - type: volume
+        source: commercify-db-test
+        target: /var/lib/postgresql/data/
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+
+volumes:
+  commercify-db-dev:
+  commercify-db-test:

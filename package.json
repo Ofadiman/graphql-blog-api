@@ -10,6 +10,11 @@
   "license": "MIT",
   "scripts": {
     "build": "rimraf dist && nest build",
+    "docker:dev": "yarn docker:up && yarn docker:logs",
+    "docker:logs": "docker-compose logs --follow --timestamps --tail 200 commercify-api",
+    "docker:shell": "docker-compose exec commercify-api bash",
+    "docker:stop": "docker-compose stop",
+    "docker:up": "docker-compose up -d",
     "lint:ci": "eslint \"src/**/*.ts\"",
     "lint:fix": "eslint \"src/**/*.ts\" --fix",
     "start:debug": "nest start --debug --watch",
