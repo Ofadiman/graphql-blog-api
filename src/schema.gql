@@ -8,6 +8,9 @@ type Mutation {
 
 """A model that represents posts added by a user."""
 type Post {
+  """Post content. The user can write anything they want in the post."""
+  content: String!
+
   """An identifier that identifies a unique user."""
   id: Int!
 
@@ -32,8 +35,14 @@ input UpvotePostArgs {
 
 """A model that represents the user of the application."""
 type User {
+  """Email address."""
+  email: String!
+
   """An identifier that identifies a unique user."""
   id: Int!
+
+  """Encrypted password."""
+  password: String!
 
   """
   A list of posts that have been created by the user with the selected ID.

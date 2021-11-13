@@ -5,6 +5,7 @@ import path from 'node:path'
 
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
+import { DatabaseModule } from './core/database/database.module'
 import { PostsModule } from './posts/posts.module'
 import { UsersModule } from './users/users.module'
 
@@ -21,7 +22,8 @@ import { UsersModule } from './users/users.module'
       sortSchema: true
     }),
     UsersModule,
-    PostsModule
+    PostsModule,
+    DatabaseModule
   ],
   providers: [AppService]
 })

@@ -12,7 +12,7 @@ module.exports = {
       jsx: true
     }
   },
-  ignorePatterns: ['dist', '.eslintrc.js'],
+  ignorePatterns: ['dist', '.eslintrc.js', 'scripts/database'],
   settings: {
     ['import/resolver']: {
       node: {
@@ -669,7 +669,7 @@ module.exports = {
     'unicorn/escape-case': 'error',
     'unicorn/expiring-todo-comments': 'error',
     'unicorn/explicit-length-check': 'error',
-    'unicorn/filename-case': ['error', { cases: { camelCase: true, pascalCase: true, kebabCase: true } }],
+    'unicorn/filename-case': 'off', // Any file naming strategy is possible depending on what libraries the application uses.
     'unicorn/import-index': 'error',
     'unicorn/import-style': 'off',
     'unicorn/new-for-builtins': 'error',

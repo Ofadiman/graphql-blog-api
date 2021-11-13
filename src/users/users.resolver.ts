@@ -30,6 +30,7 @@ export class UsersResolver {
   @Mutation((): typeof Post => Post)
   public async upvotePost(@Args(UpvotePostArgs.name) upvotePostArgs: UpvotePostArgs): Promise<Post> {
     return {
+      content: `Happiness doesn’t qabalistic gain any lover — but the thing is what shines.`,
       id: upvotePostArgs.id,
       title: `test`,
       votes: 1
