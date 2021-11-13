@@ -4,15 +4,12 @@ import { GraphQLModule } from '@nestjs/graphql'
 import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core'
 import path from 'node:path'
 
-import { AppController } from './app.controller'
-import { AppService } from './app.service'
 import { DatabaseModule } from './core/database/database.module'
 import { AppValidationPipe } from './core/utils/pipes/validation.pipe'
 import { PostsModule } from './posts/posts.module'
 import { UsersModule } from './users/users.module'
 
 @Module({
-  controllers: [AppController],
   imports: [
     GraphQLModule.forRoot({
       // The `autoSchemaFile` option allows you to specify where the graphql schema will be generated.
@@ -28,7 +25,6 @@ import { UsersModule } from './users/users.module'
     DatabaseModule
   ],
   providers: [
-    AppService,
     {
       provide: APP_PIPE,
       useClass: AppValidationPipe
