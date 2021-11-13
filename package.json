@@ -1,20 +1,20 @@
 {
-  "name": "commercify",
+  "name": "graphql-blog-api",
   "version": "1.0.0",
   "author": {
     "email": "ofadiman@gmail.com",
     "name": "Szymon Jaworski",
     "url": "https://github.com/Ofadiman"
   },
-  "description": "E-commerce application.",
+  "description": "A content management system for blogging applications written in GraphQL.",
   "license": "MIT",
   "scripts": {
     "build": "rimraf dist && nest build",
     "db:cli": "node scripts/database/main.js",
     "docker:dev": "yarn docker:up && yarn docker:logs",
-    "docker:logs": "docker-compose logs --follow --timestamps --tail 200 commercify-api",
+    "docker:logs": "docker-compose logs --follow --timestamps --tail 200 graphql-blog-api",
     "docker:restart": "yarn docker:stop && yarn docker:dev",
-    "docker:shell": "docker-compose exec commercify-api bash",
+    "docker:shell": "docker-compose exec graphql-blog-api bash",
     "docker:stop": "docker-compose stop",
     "docker:up": "docker-compose up -d",
     "lint:ci": "eslint \"src/**/*.ts\"",

@@ -1,8 +1,8 @@
 version: '3.7'
 
 services:
-  commercify-api:
-    container_name: commercify-api
+  graphql-blog-api:
+    container_name: graphql-blog-api
     build:
       context: .
       dockerfile: dev.Dockerfile
@@ -15,36 +15,36 @@ services:
     volumes:
       - .:/app
     depends_on:
-      - commercify-db-dev
-      - commercify-db-test
+      - graphql-blog-db-dev
+      - graphql-blog-db-test
     links:
-      - commercify-db-dev
-      - commercify-db-test
+      - graphql-blog-db-dev
+      - graphql-blog-db-test
     working_dir: /app
     command: yarn start:debug
 
-  commercify-db-dev:
-    container_name: commercify-db-dev
+  graphql-blog-db-dev:
+    container_name: graphql-blog-db-dev
     image: library/postgres:13.4-alpine
     ports:
       - "5432:5432"
     volumes:
       - type: volume
-        source: commercify-db-dev
+        source: graphql-blog-db-dev
         target: /var/lib/postgresql/data/
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: postgres
 
-  commercify-db-test:
-    container_name: commercify-db-test
+  graphql-blog-db-test:
+    container_name: graphql-blog-db-test
     image: library/postgres:13.4-alpine
     ports:
       - "5433:5432"
     volumes:
       - type: volume
-        source: commercify-db-test
+        source: graphql-blog-db-test
         target: /var/lib/postgresql/data/
     environment:
       POSTGRES_USER: postgres
@@ -52,5 +52,5 @@ services:
       POSTGRES_DB: postgres
 
 volumes:
-  commercify-db-dev:
-  commercify-db-test:
+  graphql-blog-db-dev:
+  graphql-blog-db-test:

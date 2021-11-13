@@ -11,7 +11,7 @@ export const knexConfig: Knex.Config = {
   client: `pg`,
   connection: {
     database: `postgres`,
-    host: `commercify-db-dev`,
+    host: `graphql-blog-db-dev`,
     password: `postgres`,
     port: 5_432,
     user: `postgres`
