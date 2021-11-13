@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common'
+import { APP_PIPE } from '@nestjs/core'
 import { GraphQLModule } from '@nestjs/graphql'
 import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core'
 import path from 'node:path'
@@ -6,6 +7,7 @@ import path from 'node:path'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
 import { DatabaseModule } from './core/database/database.module'
+import { AppValidationPipe } from './core/utils/pipes/validation.pipe'
 import { PostsModule } from './posts/posts.module'
 import { UsersModule } from './users/users.module'
 
@@ -25,6 +27,12 @@ import { UsersModule } from './users/users.module'
     PostsModule,
     DatabaseModule
   ],
-  providers: [AppService]
+  providers: [
+    AppService,
+    {
+      provide: APP_PIPE,
+      useClass: AppValidationPipe
+    }
+  ]
 })
 export class AppModule {}

@@ -1,13 +1,18 @@
-import { Args, Field, InputType, Int, Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql'
+import { Args, ArgsType, Field, Int, Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql'
+import { IsInt, IsPositive, Min } from 'class-validator'
 
 import { Post } from '../posts/post.model'
 import { PostsService } from '../posts/posts.service'
+import { CreateOneUserInput } from './inputs/create-one-user.input'
 import { User } from './user.model'
 import { UsersService } from './users.service'
 
-@InputType()
-export class UpvotePostArgs {
-  @Field({ description: `The ID of the post to be updated.` })
+@ArgsType()
+class ReadOneUserByIdArgs {
+  @Field((): typeof Int => Int, { description: `User id.` })
+  @Min(3)
+  @IsInt()
+  @IsPositive()
   public id: number
 }
 
@@ -16,8 +21,8 @@ export class UsersResolver {
   public constructor(private readonly usersService: UsersService, private readonly postsService: PostsService) {}
 
   @Query((): typeof User => User, { description: `The query returns the user with the selected ID.`, name: `user` })
-  public async readOneUserById(@Args(`id`, { type: (): typeof Int => Int }) id: number): Promise<User> {
-    return this.usersService.readOneById({ id })
+  public async readOneUserById(@Args() args: ReadOneUserByIdArgs): Promise<User> {
+    return this.usersService.readOneById({ id: args.id })
   }
 
   @ResolveField(`posts`, (): [typeof Post] => [Post], {
@@ -27,13 +32,8 @@ export class UsersResolver {
     return this.postsService.readAllByUserId({ id: user.id })
   }
 
-  @Mutation((): typeof Post => Post)
-  public async upvotePost(@Args(UpvotePostArgs.name) upvotePostArgs: UpvotePostArgs): Promise<Post> {
-    return {
-      content: `Happiness doesn’t qabalistic gain any lover — but the thing is what shines.`,
-      id: upvotePostArgs.id,
-      title: `test`,
-      votes: 1
-    }
+  @Mutation((): typeof User => User, { description: `A mutation that creates a user in the application.` })
+  public async createOneUser(@Args(CreateOneUserInput.name) input: CreateOneUserInput): Promise<User> {
+    return this.usersService.createOne(input)
   }
 }

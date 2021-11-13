@@ -2,8 +2,22 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+"""Input needed to create a user."""
+input CreateOneUserInput {
+  """
+  E-mail address. E-mail length must be greater than 4 and less than 255 characters.
+  """
+  email: String!
+
+  """
+  User Password. Password length must be greater than 8 and less than 255 characters.
+  """
+  password: String!
+}
+
 type Mutation {
-  upvotePost(UpvotePostArgs: UpvotePostArgs!): Post!
+  """A mutation that creates a user in the application."""
+  createOneUser(CreateOneUserInput: CreateOneUserInput!): User!
 }
 
 """A model that represents posts added by a user."""
@@ -25,12 +39,10 @@ type Post {
 
 type Query {
   """The query returns the user with the selected ID."""
-  user(id: Int!): User!
-}
-
-input UpvotePostArgs {
-  """The ID of the post to be updated."""
-  id: Float!
+  user(
+    """User id."""
+    id: Int!
+  ): User!
 }
 
 """A model that represents the user of the application."""
