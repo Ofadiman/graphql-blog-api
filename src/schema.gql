@@ -2,6 +2,10 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Mutation {
+  upvotePost(UpvotePostArgs: UpvotePostArgs!): Post!
+}
+
 """A model that represents posts added by a user."""
 type Post {
   """An identifier that identifies a unique user."""
@@ -17,12 +21,22 @@ type Post {
 }
 
 type Query {
+  """The query returns the user with the selected ID."""
   user(id: Int!): User!
+}
+
+input UpvotePostArgs {
+  """The ID of the post to be updated."""
+  id: Float!
 }
 
 """A model that represents the user of the application."""
 type User {
   """An identifier that identifies a unique user."""
   id: Int!
+
+  """
+  A list of posts that have been created by the user with the selected ID.
+  """
   posts: [Post!]!
 }
