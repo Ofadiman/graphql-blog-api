@@ -1,20 +1,11 @@
-import { Args, ArgsType, Field, Int, Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql'
-import { IsInt, IsPositive, Min } from 'class-validator'
+import { Args, Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql'
 
 import { Post } from '../posts/post.model'
 import { PostsService } from '../posts/posts.service'
+import { ReadOneUserArgs } from './args/read-one-user.args'
 import { CreateOneUserInput } from './inputs/create-one-user.input'
 import { User } from './user.model'
 import { UsersService } from './users.service'
-
-@ArgsType()
-class ReadOneUserByIdArgs {
-  @Field((): typeof Int => Int, { description: `User id.` })
-  @Min(3)
-  @IsInt()
-  @IsPositive()
-  public id: number
-}
 
 @Resolver((): typeof User => User)
 export class UsersResolver {
@@ -28,8 +19,8 @@ export class UsersResolver {
   }
 
   @Query((): typeof User => User, { description: `The query returns the user with the selected ID.`, name: `user` })
-  public async readOneUserById(@Args() args: ReadOneUserByIdArgs): Promise<User> {
-    return this.usersService.readOneById({ id: args.id })
+  public async readOneUser(@Args() args: ReadOneUserArgs): Promise<User> {
+    return this.usersService.readOne(args)
   }
 
   @ResolveField(`posts`, (): [typeof Post] => [Post], {

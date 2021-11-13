@@ -41,7 +41,7 @@ type Post {
 type Query {
   """The query returns the user with the selected ID."""
   user(
-    """User id."""
+    """An identifier that identifies a unique user."""
     id: Int!
   ): User!
 }

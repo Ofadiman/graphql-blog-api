@@ -3,6 +3,7 @@ import { plainToClass } from 'class-transformer'
 import { Knex } from 'knex'
 import { InjectKnex } from 'nestjs-knex'
 
+import { ReadOneUserArgs } from './args/read-one-user.args'
 import { CreateOneUserInput } from './inputs/create-one-user.input'
 import { User } from './user.model'
 
@@ -14,5 +15,11 @@ export class UsersRepository {
     const [user]: Array<User> = await this.knex.table<User>(User.TABLE_NAME).insert(args).returning(`*`)
 
     return plainToClass(User, user)
+  }
+
+  public async readOne(args: ReadOneUserArgs): Promise<User | undefined> {
+    const [user]: Array<User> = await this.knex.table<User>(User.TABLE_NAME).where(args).select(`*`)
+
+    return user
   }
 }
