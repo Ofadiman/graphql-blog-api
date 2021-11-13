@@ -20,6 +20,13 @@ class ReadOneUserByIdArgs {
 export class UsersResolver {
   public constructor(private readonly usersService: UsersService, private readonly postsService: PostsService) {}
 
+  @Mutation((): typeof User => User, { description: `A mutation that creates a user in the application.` })
+  public async createOneUser(
+    @Args({ description: CreateOneUserInput.DESCRIPTION, name: CreateOneUserInput.name }) input: CreateOneUserInput
+  ): Promise<User> {
+    return this.usersService.createOne(input)
+  }
+
   @Query((): typeof User => User, { description: `The query returns the user with the selected ID.`, name: `user` })
   public async readOneUserById(@Args() args: ReadOneUserByIdArgs): Promise<User> {
     return this.usersService.readOneById({ id: args.id })
@@ -30,10 +37,5 @@ export class UsersResolver {
   })
   public async readManyPostsByUserId(@Parent() user: User): Promise<Array<Post>> {
     return this.postsService.readAllByUserId({ id: user.id })
-  }
-
-  @Mutation((): typeof User => User, { description: `A mutation that creates a user in the application.` })
-  public async createOneUser(@Args(CreateOneUserInput.name) input: CreateOneUserInput): Promise<User> {
-    return this.usersService.createOne(input)
   }
 }

@@ -4,9 +4,7 @@
 
 """Input needed to create a user."""
 input CreateOneUserInput {
-  """
-  E-mail address. E-mail length must be greater than 4 and less than 255 characters.
-  """
+  """E-mail address."""
   email: String!
 
   """
@@ -17,7 +15,10 @@ input CreateOneUserInput {
 
 type Mutation {
   """A mutation that creates a user in the application."""
-  createOneUser(CreateOneUserInput: CreateOneUserInput!): User!
+  createOneUser(
+    """Input used to create the user."""
+    CreateOneUserInput: CreateOneUserInput!
+  ): User!
 }
 
 """A model that represents posts added by a user."""
@@ -47,13 +48,13 @@ type Query {
 
 """A model that represents the user of the application."""
 type User {
-  """Email address."""
+  """E-mail address."""
   email: String!
 
   """An identifier that identifies a unique user."""
   id: Int!
 
-  """Encrypted password."""
+  """User Password."""
   password: String!
 
   """
