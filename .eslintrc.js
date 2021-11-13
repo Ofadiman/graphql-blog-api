@@ -252,10 +252,7 @@ module.exports = {
     'operator-assignment': ['error', 'always'],
     'operator-linebreak': 'off', // Overrides prettier config.
     'padded-blocks': ['error', 'never'],
-    'padding-line-between-statements': [
-      'error',
-      { blankLine: 'always', prev: '*', next: 'return' }
-    ],
+    'padding-line-between-statements': ['error', { blankLine: 'always', prev: '*', next: 'return' }],
     'prefer-arrow-callback': 'error',
     'prefer-const': 'error',
     'prefer-destructuring': 'error',
@@ -445,7 +442,7 @@ module.exports = {
 
     // typescript-eslint
     '@typescript-eslint/adjacent-overload-signatures': 'error',
-    '@typescript-eslint/array-type': 'error',
+    '@typescript-eslint/array-type': ['error', { default: 'generic', readonly: 'generic' }],
     '@typescript-eslint/await-thenable': 'error',
     '@typescript-eslint/ban-ts-comment': [
       'error',
@@ -672,10 +669,7 @@ module.exports = {
     'unicorn/escape-case': 'error',
     'unicorn/expiring-todo-comments': 'error',
     'unicorn/explicit-length-check': 'error',
-    'unicorn/filename-case': [
-      'error',
-      { cases: { camelCase: true, pascalCase: true, kebabCase: true } }
-    ],
+    'unicorn/filename-case': ['error', { cases: { camelCase: true, pascalCase: true, kebabCase: true } }],
     'unicorn/import-index': 'error',
     'unicorn/import-style': 'off',
     'unicorn/new-for-builtins': 'error',

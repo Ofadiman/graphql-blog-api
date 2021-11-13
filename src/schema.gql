@@ -1,0 +1,28 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+"""A model that represents posts added by a user."""
+type Post {
+  """An identifier that identifies a unique user."""
+  id: Int!
+
+  """Post title. The post title is unique across the application."""
+  title: String!
+
+  """
+  The number of votes that were cast for the selected post by the users of the application.
+  """
+  votes: Int
+}
+
+type Query {
+  user(id: Int!): User!
+}
+
+"""A model that represents the user of the application."""
+type User {
+  """An identifier that identifies a unique user."""
+  id: Int!
+  posts: [Post!]!
+}
