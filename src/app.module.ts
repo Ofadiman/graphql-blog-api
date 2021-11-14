@@ -4,6 +4,7 @@ import { GraphQLModule } from '@nestjs/graphql'
 import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core'
 import path from 'node:path'
 
+import { AuthModule } from './auth/auth.module'
 import { DatabaseModule } from './core/database/database.module'
 import { AppValidationPipe } from './core/utils/pipes/validation.pipe'
 import { PostsModule } from './posts/posts.module'
@@ -22,7 +23,8 @@ import { UsersModule } from './users/users.module'
     }),
     UsersModule,
     PostsModule,
-    DatabaseModule
+    DatabaseModule,
+    AuthModule
   ],
   providers: [
     {

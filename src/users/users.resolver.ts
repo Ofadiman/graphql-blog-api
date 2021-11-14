@@ -11,7 +11,10 @@ import { UsersService } from './users.service'
 export class UsersResolver {
   public constructor(private readonly usersService: UsersService, private readonly postsService: PostsService) {}
 
-  @Mutation((): typeof User => User, { description: `A mutation that creates a user in the application.` })
+  @Mutation((): typeof User => User, {
+    deprecationReason: `User registration is now done in the "auth" module.`,
+    description: `A mutation that creates a user in the application.`
+  })
   public async createOneUser(
     @Args({ description: CreateOneUserInput.DESCRIPTION, name: CreateOneUserInput.name }) input: CreateOneUserInput
   ): Promise<User> {

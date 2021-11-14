@@ -18,6 +18,12 @@ type Mutation {
   createOneUser(
     """Input used to create the user."""
     CreateOneUserInput: CreateOneUserInput!
+  ): User! @deprecated(reason: "User registration is now done in the \"auth\" module.")
+
+  """A mutation that registers a new user in the application."""
+  registerUser(
+    """Input used to create the user."""
+    RegisterUserInput: RegisterUserInput!
   ): User!
 }
 
@@ -44,6 +50,17 @@ type Query {
     """An identifier that identifies a unique user."""
     id: Int!
   ): User!
+}
+
+"""Input needed to create a user."""
+input RegisterUserInput {
+  """E-mail address."""
+  email: String!
+
+  """
+  User Password. Password length must be greater than 8 and less than 255 characters.
+  """
+  password: String!
 }
 
 """A model that represents the user of the application."""
