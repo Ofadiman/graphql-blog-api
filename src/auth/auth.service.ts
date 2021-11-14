@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
 
-import { BcryptService } from '../core/utils/providers/bcrypt.service'
+import { BcryptService } from '../core/providers/bcrypt.service'
 import { User } from '../users/user.model'
 import { UsersRepository } from '../users/users.repository'
 import { RegisterUserInput } from './input/register-user.input'

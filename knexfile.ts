@@ -19,7 +19,7 @@ export const knexConfig: Knex.Config = {
   // Logs all queries to the database.
   debug: true,
   migrations: {
-    directory: `src/core/database/migrations`,
+    directory: `src/database/migrations`,
     tableName: `migrations`
   },
   // Specifies the minimum and maximum number of connections in a pool.
@@ -28,7 +28,7 @@ export const knexConfig: Knex.Config = {
     min: 1
   },
   seeds: {
-    directory: `src/core/database/seeds`
+    directory: `src/database/seeds`
   }
 }
 

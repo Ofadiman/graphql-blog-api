@@ -1,12 +1,12 @@
-import { Module } from '@nestjs/common'
+import { Module, ValidationPipe } from '@nestjs/common'
 import { APP_PIPE } from '@nestjs/core'
 import { GraphQLModule } from '@nestjs/graphql'
 import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core'
 import path from 'node:path'
 
 import { AuthModule } from './auth/auth.module'
-import { DatabaseModule } from './core/database/database.module'
-import { AppValidationPipe } from './core/utils/pipes/validation.pipe'
+import { CoreModule } from './core/core.module'
+import { DatabaseModule } from './database/database.module'
 import { PostsModule } from './posts/posts.module'
 import { UsersModule } from './users/users.module'
 
@@ -24,12 +24,21 @@ import { UsersModule } from './users/users.module'
     UsersModule,
     PostsModule,
     DatabaseModule,
-    AuthModule
+    AuthModule,
+    CoreModule
   ],
   providers: [
     {
       provide: APP_PIPE,
-      useClass: AppValidationPipe
+      useValue: new ValidationPipe({
+        forbidNonWhitelisted: true,
+        forbidUnknownValues: true,
+        transform: true,
+        validationError: {
+          target: false,
+          value: true
+        }
+      })
     }
   ]
 })
