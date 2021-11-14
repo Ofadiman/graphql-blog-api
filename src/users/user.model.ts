@@ -2,7 +2,7 @@ import { Field, Int, ObjectType } from '@nestjs/graphql'
 
 import { Post } from '../posts/post.model'
 
-@ObjectType({ description: `A model that represents the user of the application.`, isAbstract: true })
+@ObjectType({ description: `A model that represents the user of the application.` })
 export class User {
   public static TABLE_NAME: string = `users`
 

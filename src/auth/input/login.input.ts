@@ -3,9 +3,9 @@ import { IsEmail, Length } from 'class-validator'
 
 import { User } from '../../users/user.model'
 
-@InputType({ description: `Input needed to create a user.` })
-export class RegisterUserInput {
-  public static DESCRIPTION: string = `Input used to create the user.`
+@InputType({ description: `Input needed to login to the application.` })
+export class LoginInput {
+  public static DESCRIPTION: string = `Input needed to login to the application.`
 
   @Field((): typeof String => String, { description: User.EMAIL_DESCRIPTION })
   @IsEmail()

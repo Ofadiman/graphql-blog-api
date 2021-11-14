@@ -13,6 +13,22 @@ input CreateOneUserInput {
   password: String!
 }
 
+"""Input needed to login to the application."""
+input LoginInput {
+  """E-mail address."""
+  email: String!
+
+  """
+  User Password. Password length must be greater than 8 and less than 255 characters.
+  """
+  password: String!
+}
+
+type LoginResponse {
+  """The token used for user authentication."""
+  token: String!
+}
+
 type Mutation {
   """A mutation that creates a user in the application."""
   createOneUser(
@@ -20,11 +36,17 @@ type Mutation {
     CreateOneUserInput: CreateOneUserInput!
   ): User! @deprecated(reason: "User registration is now done in the \"auth\" module.")
 
+  """A mutation that logs in a user."""
+  login(
+    """Input needed to login to the application."""
+    LoginInput: LoginInput!
+  ): LoginResponse!
+
   """A mutation that registers a new user in the application."""
   registerUser(
     """Input used to create the user."""
-    RegisterUserInput: RegisterUserInput!
-  ): User!
+    RegisterInput: RegisterInput!
+  ): Void!
 }
 
 """A model that represents posts added by a user."""
@@ -48,12 +70,15 @@ type Query {
   """The query returns the user with the selected ID."""
   user(
     """An identifier that identifies a unique user."""
+    email: Int!
+
+    """An identifier that identifies a unique user."""
     id: Int!
   ): User!
 }
 
 """Input needed to create a user."""
-input RegisterUserInput {
+input RegisterInput {
   """E-mail address."""
   email: String!
 
@@ -79,3 +104,6 @@ type User {
   """
   posts: [Post!]!
 }
+
+"""Represents NULL values"""
+scalar Void

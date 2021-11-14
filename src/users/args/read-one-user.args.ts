@@ -1,5 +1,5 @@
 import { ArgsType, Field, Int } from '@nestjs/graphql'
-import { IsInt, IsPositive } from 'class-validator'
+import { IsEmail, IsInt, IsOptional, IsPositive } from 'class-validator'
 
 import { User } from '../user.model'
 
@@ -8,5 +8,11 @@ export class ReadOneUserArgs {
   @Field((): typeof Int => Int, { description: User.ID_DESCRIPTION })
   @IsInt()
   @IsPositive()
-  public id: number
+  @IsOptional()
+  public id?: number
+
+  @Field((): typeof Int => Int, { description: User.ID_DESCRIPTION })
+  @IsEmail()
+  @IsOptional()
+  public email?: string
 }

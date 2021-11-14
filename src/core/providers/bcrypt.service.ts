@@ -10,4 +10,10 @@ export class BcryptService {
 
     return hash
   }
+
+  public async compare(args: { encrypted: string; plain: Buffer | string }): Promise<boolean> {
+    const didMatch: boolean = await bcrypt.compare(args.plain, args.encrypted)
+
+    return didMatch
+  }
 }
