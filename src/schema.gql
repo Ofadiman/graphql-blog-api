@@ -70,10 +70,10 @@ type Query {
   """The query returns the user with the selected ID."""
   user(
     """An identifier that identifies a unique user."""
-    email: Int!
+    email: String
 
     """An identifier that identifies a unique user."""
-    id: Int!
+    id: Int
   ): User!
 }
 

@@ -7,6 +7,10 @@ import { ReadOneUserArgs } from './args/read-one-user.args'
 import { CreateOneUserInput } from './inputs/create-one-user.input'
 import { User } from './user.model'
 
+const isString = (value: unknown): value is string => {
+  return typeof value === `string`
+}
+
 @Injectable()
 export class UsersRepository {
   public constructor(@InjectKnex() private readonly knex: Knex) {}
@@ -18,7 +22,15 @@ export class UsersRepository {
   }
 
   public async readOne(args: ReadOneUserArgs): Promise<User | undefined> {
-    const [user]: Array<User> = await this.knex.table<User>(User.TABLE_NAME).where(args).select(`*`)
+    const queryBuilder: Knex.QueryBuilder<User, Array<User>> = this.knex.table<User>(User.TABLE_NAME).select(`*`)
+
+    for (const [key, value] of Object.entries(args)) {
+      if (isString(value)) {
+        void queryBuilder.where(key, value)
+      }
+    }
+
+    const [user]: Array<User> = await queryBuilder
 
     return user
   }
