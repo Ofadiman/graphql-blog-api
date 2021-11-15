@@ -2,6 +2,15 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+"""Input used to create a post."""
+input CreateOnePostInput {
+  """Post title. The post title is unique across the application."""
+  content: String!
+
+  """Post title. The post title is unique across the application."""
+  title: String!
+}
+
 """Input needed to create a user."""
 input CreateOneUserInput {
   """E-mail address."""
@@ -30,6 +39,12 @@ type LoginResponse {
 }
 
 type Mutation {
+  """A mutation that creates a post."""
+  createOnePost(
+    """Input used to create a post."""
+    CreateOnePostInput: CreateOnePostInput!
+  ): Post!
+
   """A mutation that creates a user in the application."""
   createOneUser(
     """Input used to create the user."""
