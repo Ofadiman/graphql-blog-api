@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common'
+import { forwardRef, Module } from '@nestjs/common'
 
 import { PostsModule } from '../posts/posts.module'
 import { UsersRepository } from './users.repository'
@@ -7,7 +7,7 @@ import { UsersService } from './users.service'
 
 @Module({
   exports: [UsersService, UsersRepository],
-  imports: [PostsModule],
+  imports: [forwardRef((): typeof PostsModule => PostsModule)],
   providers: [UsersResolver, UsersService, UsersRepository]
 })
 export class UsersModule {}

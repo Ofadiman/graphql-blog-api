@@ -11,18 +11,26 @@ const isString = (value: unknown): value is string => {
   return typeof value === `string`
 }
 
+type UserRecord = {
+  email: string
+  id: number
+  password: string
+}
+
 @Injectable()
 export class UsersRepository {
   public constructor(@InjectKnex() private readonly knex: Knex) {}
 
   public async createOne(args: CreateOneUserInput): Promise<User> {
-    const [user]: Array<User> = await this.knex.table<User>(User.TABLE_NAME).insert(args).returning(`*`)
+    const [user]: Array<UserRecord> = await this.knex.table<UserRecord>(User.TABLE_NAME).insert(args).returning(`*`)
 
     return plainToClass(User, user)
   }
 
   public async readOne(args: ReadOneUserArgs): Promise<User | undefined> {
-    const queryBuilder: Knex.QueryBuilder<User, Array<User>> = this.knex.table<User>(User.TABLE_NAME).select(`*`)
+    const queryBuilder: Knex.QueryBuilder<UserRecord, Array<UserRecord>> = this.knex
+      .table<UserRecord>(User.TABLE_NAME)
+      .select(`*`)
 
     for (const [key, value] of Object.entries(args)) {
       if (isString(value)) {
@@ -30,8 +38,14 @@ export class UsersRepository {
       }
     }
 
-    const [user]: Array<User> = await queryBuilder
+    const [user]: Array<UserRecord> = await queryBuilder
 
-    return user
+    return plainToClass(User, user)
+  }
+
+  public async readManyByIds(ids: Readonly<Array<number>>): Promise<Array<User>> {
+    const users: Array<UserRecord> = await this.knex.table<UserRecord>(User.TABLE_NAME).select(`*`).whereIn(`id`, ids)
+
+    return users.map((user: UserRecord): User => plainToClass(User, user))
   }
 }

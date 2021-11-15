@@ -74,6 +74,8 @@ type Post {
 
   """Post title. The post title is unique across the application."""
   title: String!
+  user: UserInPost!
+  userId: Int!
 
   """
   The number of votes that were cast for the selected post by the users of the application.
@@ -82,6 +84,9 @@ type Post {
 }
 
 type Query {
+  """The query returns a list of posts according to the given criteria."""
+  posts: [Post!]!
+
   """The query returns the user with the selected ID."""
   user(
     """An identifier that identifies a unique user."""
@@ -118,6 +123,14 @@ type User {
   A list of posts that have been created by the user with the selected ID.
   """
   posts: [Post!]!
+}
+
+type UserInPost {
+  """E-mail address."""
+  email: String!
+
+  """An identifier that identifies a unique user."""
+  id: Int!
 }
 
 """Represents NULL values"""

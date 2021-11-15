@@ -16,6 +16,10 @@ export class PostsService {
     return this.postsRepository.createOne(input)
   }
 
+  public async readMany(): Promise<Array<Post>> {
+    return this.postsRepository.readMany()
+  }
+
   public async readAllByUserId(args: ReadAllByUserIdArgs): Promise<Array<Post>> {
     const mockPost: Post = new Post()
     mockPost.content = `As i have heared you, so you must forget one another. Always confidently realize the one spirit.`

@@ -23,4 +23,8 @@ export class UsersService {
   public async createOne(args: CreateOneUserInput): Promise<User> {
     return this.usersRepository.createOne(args)
   }
+
+  public async readManyByIds(ids: Readonly<Array<number>>): Promise<Array<User>> {
+    return this.usersRepository.readManyByIds(ids)
+  }
 }

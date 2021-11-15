@@ -26,4 +26,14 @@ export class PostsRepository {
 
     return plainToClass(Post, post)
   }
+
+  public async readMany(): Promise<Array<Post>> {
+    const posts: Array<PostRecord> = await this.knex.table<PostRecord>(Post.TABLE_NAME).select(`*`)
+
+    return posts.map((post: PostRecord): Post => {
+      const { user_id, ...rest }: PostRecord = post
+
+      return plainToClass(Post, { ...rest, userId: user_id })
+    })
+  }
 }

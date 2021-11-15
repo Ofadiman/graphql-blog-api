@@ -1,4 +1,9 @@
-import { Field, Int, ObjectType } from '@nestjs/graphql'
+import { Field, Int, ObjectType, PickType } from '@nestjs/graphql'
+
+import { User } from '../users/user.model'
+
+@ObjectType()
+export class UserInPost extends PickType(User, [`id`, `email`]) {}
 
 @ObjectType({ description: `A model that represents posts added by a user.` })
 export class Post {
@@ -30,5 +35,11 @@ export class Post {
     description: Post.VOTES_DESCRIPTION,
     nullable: true
   })
-  public votes: number | null
+  public votes?: number
+
+  @Field((): typeof UserInPost => UserInPost)
+  public user: UserInPost
+
+  @Field((): typeof Int => Int)
+  public userId: number
 }

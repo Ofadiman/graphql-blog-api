@@ -156,7 +156,7 @@ module.exports = {
     'no-inline-comments': 'error',
     'no-inner-declarations': 'error',
     'no-invalid-regexp': 'error',
-    'no-invalid-this': 'error',
+    'no-invalid-this': 'off', // Rule exists in `@typescript-eslint/eslint-plugin` library.
     'no-irregular-whitespace': 'error',
     'no-iterator': 'error',
     'no-label-var': 'error',
@@ -507,7 +507,7 @@ module.exports = {
       { selector: 'typeLike', format: ['PascalCase'] },
       {
         selector: 'variable',
-        format: ['camelCase', 'PascalCase', 'UPPER_CASE'],
+        format: ['camelCase', 'PascalCase', 'UPPER_CASE', 'snake_case'],
         leadingUnderscore: 'allow'
       },
       {
@@ -548,7 +548,7 @@ module.exports = {
     '@typescript-eslint/no-implicit-any-catch': 'error',
     '@typescript-eslint/no-implied-eval': 'error',
     '@typescript-eslint/no-inferrable-types': 'off',
-    '@typescript-eslint/no-invalid-this': 'error',
+    '@typescript-eslint/no-invalid-this': 'off', // Shows an error when used with data loaders from graphql.
     '@typescript-eslint/no-invalid-void-type': 'error',
     '@typescript-eslint/no-loop-func': 'error',
     '@typescript-eslint/no-loss-of-precision': 'error',
