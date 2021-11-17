@@ -1,73 +1,52 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
+# Blog API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+An app that allows users to create blog posts.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Objectives
 
-## Description
+- [ ] Learn GraphQL.
+  - [ ] How to combine GraphQL with NestJS.
+  - [ ] What are [resolvers](https://docs.nestjs.com/graphql/resolvers).
+  - [ ] What are [mutations](https://docs.nestjs.com/graphql/mutations).
+  - [ ] What are [subscriptions](https://docs.nestjs.com/graphql/subscriptions).
+  - [ ] What are [scalars](https://docs.nestjs.com/graphql/scalars).
+  - [ ] What are [directives](https://docs.nestjs.com/graphql/directives).
+  - [ ] What are [plugins](https://docs.nestjs.com/graphql/plugins).
+  - [ ] What are [field middlewares](https://docs.nestjs.com/graphql/field-middleware) and how to use the with `Code First Approach`.
+  - [ ] What is the `Code First Approach` and how to use it to document the schema.
+  - [ ] What is `data loader` and how to avoid the `N+1 problem`.
+  - [ ] What is schema [federation](https://docs.nestjs.com/graphql/federation) and how to use it.
+- [ ] Learn [knex](https://www.npmjs.com/package/knex) library basics.
+  - [ ] How to create entities.
+  - [ ] How to create SQL relationships (one to one, one to many, many to many).
+  - [ ] How to create database migrations.
+  - [ ] How to create database seeds.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Entities
 
-## Installation
+- `User` - Users play a key role in the application. Each person who wants to use the application must create an account. The created account is used for user authentication and authorization purposes, as well as to create relationships with other entities in the application.
+- `Profile` - Each user has a profile created at the time of account creation. The profile is used for presentation purposes and is responsible for showing more details about the user in the application.
+- `Post` - Any user in the app can create posts. Posts are visible by all users and are the heart of the app.
+- `Comments` - Each post can have comments added to it. Comment can only be created by logged-in user.
+- `Tags` - Post authors have the ability to add tags so that app users can more easily search for posts of interest.
 
-```bash
-$ npm install
-```
+## User stories
 
-## Running the app
+Functionalities that are available in the application.
 
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
-
-## Test
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+- **Authentication/Authorization**
+  - [x] As a user, I can register an account.
+  - [x] As a user, I can log in.
+- **Profiles**
+  - [ ] As a user, I have a default profile assigned on account creation.
+  - [ ] As a user, I can update my profile (e.g. change username, change profile picture).
+- **Posts**
+  - [ ] As a user, I can create a post.
+  - [ ] As a user, I can update the post I created.
+  - [ ] as a user, I can read posts by tags.
+- **Comments**
+  - [ ] As a user, I can create a comment.
+  - [ ] As a user, I can update the comment I created.
+- **Tags**
+  - [ ] As a user, create a tag.
+  - [ ] As a user, I can tag a post.
