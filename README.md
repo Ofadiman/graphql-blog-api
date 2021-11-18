@@ -39,7 +39,7 @@ Functionalities that are available in the application.
   - [x] As a user, I can log in.
 - **Profiles**
   - [x] As a user, I have a default profile assigned on account creation.
-  - [ ] As a user, I can update my profile (e.g. change username, change profile picture).
+  - [x] As a user, I can update my profile (e.g. change username, change profile picture).
 - **Posts**
   - [ ] As a user, I can create a post.
   - [ ] As a user, I can update the post I created.
@@ -68,3 +68,4 @@ There are 3 layers in the application, which are `resolvers`, `services` and `re
 - A class with the `Input` ending (`.input.ts` file suffix) denotes the arguments to the GraphQL mutation.
 - A class with the `Model` ending (`.model.ts` file suffix) denotes a business model used in the application on which additional methods are available to perform business logic.
 - A class with the `Record` ending (`.record.ts` file suffix) denotes an entity stored in the database.
+- A class with the `Response` ending (`.response.ts` file suffix) denotes the response type of GraphQL query or mutation.

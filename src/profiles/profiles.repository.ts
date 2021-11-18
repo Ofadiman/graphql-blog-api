@@ -12,6 +12,12 @@ type CreateOneArgs = {
   userId: number
   username: string
 }
+type UpdateOneArgs = {
+  bio?: string
+  photo?: string
+  userId: number
+  username?: string
+}
 
 type ReadOneArgs = {
   id: number
@@ -37,6 +43,18 @@ export class ProfilesRepository {
       .table<ProfileRecord>(ProfileRecord.TABLE_NAME)
       .select(`*`)
       .where({ user_id: args.id })
+
+    return plainToClass(ProfileModel, profileRecord)
+  }
+
+  public async updateOne(args: UpdateOneArgs): Promise<ProfileModel> {
+    const { userId, ...rest }: UpdateOneArgs = args
+
+    const [profileRecord]: Array<ProfileRecord> = await this.knex
+      .table<ProfileRecord>(ProfileRecord.TABLE_NAME)
+      .update(rest)
+      .where({ user_id: userId })
+      .returning(`*`)
 
     return plainToClass(ProfileModel, profileRecord)
   }

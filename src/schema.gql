@@ -51,6 +51,12 @@ type Mutation {
     """Input used to create the user."""
     RegisterInput: RegisterInput!
   ): Void
+
+  """A mutation that allows to update user profile."""
+  updateProfile(
+    """Input needed to update a user profile."""
+    UpdateProfileInput: UpdateProfileInput!
+  ): UpdateProfileResponse!
 }
 
 """A model that represents posts added by a user."""
@@ -113,6 +119,43 @@ input RegisterInput {
   User Password. Password length must be greater than 8 and less than 255 characters.
   """
   password: String!
+}
+
+"""Input needed to update a user profile."""
+input UpdateProfileInput {
+  """
+  A brief description of the user visible to other users of the application.
+  """
+  bio: String
+
+  """
+  A photo that is visible on the user's main profile to all other app users.
+  """
+  photo: String
+
+  """An identifier that identifies a unique profile."""
+  userId: Int!
+
+  """The user name that is visible to other users in the application."""
+  username: String
+}
+
+type UpdateProfileResponse {
+  """
+  A brief description of the user visible to other users of the application.
+  """
+  bio: String!
+
+  """An identifier that identifies a unique profile."""
+  id: Int!
+
+  """
+  A photo that is visible on the user's main profile to all other app users.
+  """
+  photo: String!
+
+  """The user name that is visible to other users in the application."""
+  username: String!
 }
 
 type User {
