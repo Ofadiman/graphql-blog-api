@@ -50,3 +50,21 @@ Functionalities that are available in the application.
 - **Tags**
   - [ ] As a user, create a tag.
   - [ ] As a user, I can tag a post.
+
+## Architecture
+
+There are 3 layers in the application, which are `resolvers`, `services` and `repositories`.
+
+- `Resolvers` are responsible for handling GraphQL queries. This is where the correctness of the query is validated, and the format of the returned response is defined.
+- `Services` are responsible for executing business logic. This is where, for example, we are checking whether the user can perform an action.
+- `Repositories` are responsible for reading and writing data to the database.
+
+## Terminology
+
+- A class with the `Args` ending (`.args.ts` file suffix) denotes the arguments to the GraphQL query.
+- A class with the `Constraints` ending (`.constraints.ts` file suffix) denotes an object that encapsulates constant values used when validating an incoming payload during query or mutation.
+- A class with the `Description` ending (`.description.ts` file suffix) denotes an object that encapsulates GraphQL schema descriptions.
+- A class with the `Exception` ending (`.exception.ts` file suffix) denotes an exception that can be thrown in an application.
+- A class with the `Input` ending (`.input.ts` file suffix) denotes the arguments to the GraphQL mutation.
+- A class with the `Model` ending (`.model.ts` file suffix) denotes a business model used in the application on which additional methods are available to perform business logic.
+- A class with the `Record` ending (`.record.ts` file suffix) denotes an entity stored in the database.
