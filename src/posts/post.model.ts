@@ -1,9 +1,9 @@
 import { Field, Int, ObjectType, PickType } from '@nestjs/graphql'
 
-import { User } from '../users/user.model'
+import { UserModel } from '../users/user.model'
 
 @ObjectType()
-export class UserInPost extends PickType(User, [`id`, `email`]) {}
+export class UserInPost extends PickType(UserModel, [`id`, `email`]) {}
 
 @ObjectType({ description: `A model that represents posts added by a user.` })
 export class Post {

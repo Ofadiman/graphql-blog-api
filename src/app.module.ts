@@ -9,6 +9,7 @@ import { JwtGuard } from './auth/guards/jwt.guard'
 import { CoreModule } from './core/core.module'
 import { DatabaseModule } from './database/database.module'
 import { PostsModule } from './posts/posts.module'
+import { ProfilesModule } from './profiles/profiles.module'
 import { UsersModule } from './users/users.module'
 
 @Module({
@@ -26,7 +27,8 @@ import { UsersModule } from './users/users.module'
     PostsModule,
     DatabaseModule,
     AuthModule,
-    CoreModule
+    CoreModule,
+    ProfilesModule
   ],
   providers: [
     {

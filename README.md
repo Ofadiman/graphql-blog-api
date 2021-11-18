@@ -38,7 +38,7 @@ Functionalities that are available in the application.
   - [x] As a user, I can register an account.
   - [x] As a user, I can log in.
 - **Profiles**
-  - [ ] As a user, I have a default profile assigned on account creation.
+  - [x] As a user, I have a default profile assigned on account creation.
   - [ ] As a user, I can update my profile (e.g. change username, change profile picture).
 - **Posts**
   - [ ] As a user, I can create a post.

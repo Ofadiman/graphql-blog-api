@@ -1,7 +1,6 @@
 import { Args, Mutation, Resolver, ReturnTypeFuncValue } from '@nestjs/graphql'
 import { GraphQLVoid } from 'graphql-scalars'
 
-import { User } from '../users/user.model'
 import { AuthService } from './auth.service'
 import { Public } from './decorators/public.decorator'
 import { LoginInput } from './input/login.input'
@@ -22,13 +21,14 @@ export class AuthResolver {
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   @Mutation((): ReturnTypeFuncValue => GraphQLVoid, {
-    description: `A mutation that registers a new user in the application.`
+    description: `A mutation that registers a new user in the application.`,
+    nullable: true
   })
   @Public()
   public async registerUser(
     @Args({ description: RegisterInput.DESCRIPTION, name: RegisterInput.name })
     registerUserInput: RegisterInput
-  ): Promise<User> {
-    return this.authService.registerUser(registerUserInput)
+  ): Promise<void> {
+    await this.authService.registerUser(registerUserInput)
   }
 }

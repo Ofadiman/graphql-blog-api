@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common'
 import { JwtModule } from '@nestjs/jwt'
 
 import { CoreModule } from '../core/core.module'
+import { ProfilesModule } from '../profiles/profiles.module'
 import { UsersModule } from '../users/users.module'
 import { AuthResolver } from './auth.resolver'
 import { AuthService } from './auth.service'
@@ -12,7 +13,8 @@ import { JwtStrategy } from './strategies/jwt.strategy'
   imports: [
     JwtModule.register({ secret: `9b431c8bac8a236fab910bfc79c6316bbd57ffc8`, signOptions: { expiresIn: `30d` } }),
     UsersModule,
-    CoreModule
+    CoreModule,
+    ProfilesModule
   ],
   providers: [AuthResolver, AuthService, JwtStrategy, JwtGuard]
 })

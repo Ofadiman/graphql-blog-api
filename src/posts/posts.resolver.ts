@@ -3,7 +3,7 @@ import { Args, Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/g
 import DataLoader from 'dataloader'
 
 import { CurrentUser } from '../auth/decorators/current-user.decorator'
-import { User } from '../users/user.model'
+import { UserModel } from '../users/user.model'
 import { UsersService } from '../users/users.service'
 import { CreateOnePostInput } from './inputs/create-one-post.input'
 import { Post, UserInPost } from './post.model'
@@ -16,14 +16,16 @@ import { PostsService } from './posts.service'
 export class PostsLoaders {
   public constructor(private readonly usersService: UsersService) {}
 
-  public readonly batchAuthors: DataLoader<number, User> = new DataLoader(
-    async (ids: Readonly<Array<number>>): Promise<Array<Error | User>> => {
-      const users: Array<User> = await this.usersService.readManyByIds(ids)
+  public readonly batchAuthors: DataLoader<number, UserModel> = new DataLoader(
+    async (ids: Readonly<Array<number>>): Promise<Array<Error | UserModel>> => {
+      const users: Array<UserModel> = await this.usersService.readManyByIds(ids)
 
-      const usersMap: Map<number, User> = new Map(users.map((user: User): [number, User] => [user.id, user]))
+      const usersMap: Map<number, UserModel> = new Map(
+        users.map((user: UserModel): [number, UserModel] => [user.id, user])
+      )
 
-      return ids.map((id: number): Error | User => {
-        const user: User | undefined = usersMap.get(id)
+      return ids.map((id: number): Error | UserModel => {
+        const user: UserModel | undefined = usersMap.get(id)
         if (user === undefined) {
           return new Error(`User with id: ${id} could not be fetched.`)
         }
@@ -44,7 +46,7 @@ export class PostsResolver {
 
   @Mutation((): typeof Post => Post, { description: `A mutation that creates a post.` })
   public async createOnePost(
-    @CurrentUser() user: User,
+    @CurrentUser() user: UserModel,
     @Args({ description: CreateOnePostInput.DESCRIPTION, name: CreateOnePostInput.name }) input: CreateOnePostInput
   ): Promise<Post> {
     return this.postsService.createOne({ ...input, userId: user.id })

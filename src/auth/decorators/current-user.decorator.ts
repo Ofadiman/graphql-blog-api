@@ -2,14 +2,14 @@ import { createParamDecorator, ExecutionContext } from '@nestjs/common'
 import { GqlExecutionContext } from '@nestjs/graphql'
 import { Request } from 'express'
 
-import { User } from '../../users/user.model'
+import { UserModel } from '../../users/user.model'
 
 export type UserRequest = {
-  req: Request & { user: User }
+  req: Request & { user: UserModel }
 }
 
 export const CurrentUser: (...dataOrPipes: Array<unknown>) => ParameterDecorator = createParamDecorator(
-  (_data: unknown, context: ExecutionContext): User => {
+  (_data: unknown, context: ExecutionContext): UserModel => {
     if (context.getType() === `http`) {
       return context.switchToHttp().getRequest<UserRequest['req']>().user
     }
