@@ -41,8 +41,8 @@ Functionalities that are available in the application.
   - [x] As a user, I have a default profile assigned on account creation.
   - [x] As a user, I can update my profile (e.g. change username, change profile picture).
 - **Posts**
-  - [ ] As a user, I can create a post.
-  - [ ] As a user, I can update the post I created.
+  - [x] As a user, I can create a post.
+  - [x] As a user, I can update the post I created.
   - [ ] as a user, I can read posts by tags.
 - **Comments**
   - [ ] As a user, I can create a comment.

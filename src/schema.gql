@@ -52,6 +52,12 @@ type Mutation {
     RegisterInput: RegisterInput!
   ): Void
 
+  """A mutation that updates a post."""
+  updateOnePost(
+    """Input used to update a post."""
+    UpdateOnePostInput: UpdateOnePostInput!
+  ): PostModel!
+
   """A mutation that allows to update user profile."""
   updateProfile(
     """Input needed to update a user profile."""
@@ -119,6 +125,18 @@ input RegisterInput {
   User Password. Password length must be greater than 8 and less than 255 characters.
   """
   password: String!
+}
+
+"""Input used to update a post."""
+input UpdateOnePostInput {
+  """Post content. The user can write anything they want in the post."""
+  content: String
+
+  """An identifier that identifies a unique user."""
+  postId: Int!
+
+  """Post title. The post title is unique across the application."""
+  title: String
 }
 
 """Input needed to update a user profile."""

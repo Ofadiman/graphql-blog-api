@@ -27,4 +27,8 @@ export class PostModel {
 
   @Field((): typeof Int => Int)
   public userId: number
+
+  public isOwnedByUser(userModel: UserModel): boolean {
+    return this.userId === userModel.id
+  }
 }

@@ -6,6 +6,7 @@ import { CurrentUser } from '../auth/decorators/current-user.decorator'
 import { UserModel } from '../users/user.model'
 import { UsersService } from '../users/users.service'
 import { CreateOnePostInput } from './inputs/create-one-post.input'
+import { UpdateOnePostInput } from './inputs/update-one-post.input'
 import { PostModel, UserInPost } from './post.model'
 import { PostsService } from './posts.service'
 
@@ -50,6 +51,14 @@ export class PostsResolver {
     @Args({ description: CreateOnePostInput.DESCRIPTION, name: CreateOnePostInput.name }) input: CreateOnePostInput
   ): Promise<PostModel> {
     return this.postsService.createOne({ ...input, userId: user.id })
+  }
+
+  @Mutation((): typeof PostModel => PostModel, { description: `A mutation that updates a post.` })
+  public async updateOnePost(
+    @CurrentUser() user: UserModel,
+    @Args({ description: UpdateOnePostInput.DESCRIPTION, name: UpdateOnePostInput.name }) input: UpdateOnePostInput
+  ): Promise<PostModel> {
+    return this.postsService.updateOne({ input, user })
   }
 
   @Query((): Array<typeof PostModel> => [PostModel], {
