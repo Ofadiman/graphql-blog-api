@@ -2,6 +2,32 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+"""
+Each post can have comments added to it. Comment can only be created by logged-in user.
+"""
+type CommentModel {
+  """The content of the comment added under the post."""
+  content: String!
+
+  """The identifier that identifies a unique comment."""
+  id: Int!
+
+  """The identifier of the user who created the comment."""
+  postId: Int!
+
+  """The identifier of the post for which the comment was created."""
+  userId: Int!
+}
+
+"""Input used to create a comment."""
+input CreateOneCommentInput {
+  """The content of the comment added under the post."""
+  content: String!
+
+  """The identifier of the user who created the comment."""
+  postId: Int!
+}
+
 """Input used to create a post."""
 input CreateOnePostInput {
   """Post content. The user can write anything they want in the post."""
@@ -34,6 +60,12 @@ type LoginResponse {
 }
 
 type Mutation {
+  """A mutation that creates a comment."""
+  createOneComment(
+    """Input used to create a comment."""
+    CreateOneCommentInput: CreateOneCommentInput!
+  ): CommentModel!
+
   """A mutation that creates a post."""
   createOnePost(
     """Input used to create a post."""
@@ -70,7 +102,7 @@ type PostModel {
   """Post content. The user can write anything they want in the post."""
   content: String!
 
-  """An identifier that identifies a unique user."""
+  """An identifier that identifies a unique post."""
   id: Int!
 
   """Post title. The post title is unique across the application."""
@@ -132,7 +164,7 @@ input UpdateOnePostInput {
   """Post content. The user can write anything they want in the post."""
   content: String
 
-  """An identifier that identifies a unique user."""
+  """An identifier that identifies a unique post."""
   postId: Int!
 
   """Post title. The post title is unique across the application."""
