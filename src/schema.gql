@@ -102,7 +102,7 @@ type Query {
 
   """The query returns the user with the selected ID."""
   user(
-    """An identifier that identifies a unique user."""
+    """E-mail address."""
     email: String
 
     """An identifier that identifies a unique user."""
@@ -110,7 +110,7 @@ type Query {
   ): UserModel!
 }
 
-"""Input needed to create a user."""
+"""Input used to create the user."""
 input RegisterInput {
   """E-mail address."""
   email: String!
@@ -182,7 +182,9 @@ type UserModel {
   """An identifier that identifies a unique user."""
   id: Int!
 
-  """User Password."""
+  """
+  User Password. Password length must be greater than 8 and less than 255 characters.
+  """
   password: String!
 
   """

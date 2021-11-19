@@ -4,7 +4,7 @@ import { IsInt, IsOptional, IsPositive, IsString, IsUrl, Length } from 'class-va
 import { ProfileConstraints } from '../profile.constraints'
 import { ProfileDescriptions } from '../profile.descriptions'
 
-@InputType({ description: `Input needed to update a user profile.` })
+@InputType({ description: UpdateProfileInput.DESCRIPTION })
 export class UpdateProfileInput {
   public static DESCRIPTION: string = `Input needed to update a user profile.`
 

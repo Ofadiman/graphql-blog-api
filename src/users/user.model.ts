@@ -1,31 +1,20 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql'
 
 import { PostModel } from '../posts/post.model'
+import { UserDescriptions } from './user.descriptions'
 
-@ObjectType({ description: `A model that represents the user of the application.` })
+@ObjectType({ description: UserDescriptions.MODEL })
 export class UserModel {
-  public static TABLE_NAME: string = `users`
-
-  public static MAX_EMAIL_LENGTH: number = 255
-  public static MAX_PASSWORD_LENGTH: number = 255
-  public static MIN_EMAIL_LENGTH: number = 4
-  public static MIN_PASSWORD_LENGTH: number = 8
-
-  public static ID_DESCRIPTION: string = `An identifier that identifies a unique user.`
-  public static EMAIL_DESCRIPTION: string = `E-mail address.`
-  public static PASSWORD_DESCRIPTION: string = `User Password.`
-  public static POSTS_DESCRIPTION: string = `Posts that were written by the selected user.`
-
-  @Field((): typeof Int => Int, { description: UserModel.ID_DESCRIPTION })
+  @Field((): typeof Int => Int, { description: UserDescriptions.ID })
   public id: number
 
-  @Field((): typeof String => String, { description: UserModel.EMAIL_DESCRIPTION })
+  @Field((): typeof String => String, { description: UserDescriptions.EMAIL })
   public email: string
 
-  @Field((): typeof String => String, { description: UserModel.PASSWORD_DESCRIPTION })
+  @Field((): typeof String => String, { description: UserDescriptions.PASSWORD })
   public password: string
 
-  @Field((): Array<typeof PostModel> => [PostModel], { description: UserModel.POSTS_DESCRIPTION })
+  @Field((): Array<typeof PostModel> => [PostModel], { description: UserDescriptions.POSTS })
   public posts: Array<PostModel>
 
   public toSerializableObject(): Pick<UserModel, 'email' | 'id' | 'posts'> {

@@ -21,7 +21,7 @@ export class UsersRepository {
     const queryRunner: Knex = transaction ?? this.knex
 
     const [user]: Array<UserRecord> = await queryRunner
-      .table<UserRecord>(UserModel.TABLE_NAME)
+      .table<UserRecord>(UserRecord.TABLE_NAME)
       .insert(args)
       .returning(`*`)
 
@@ -30,7 +30,7 @@ export class UsersRepository {
 
   public async readOne(args: ReadOneUserArgs): Promise<UserModel | undefined> {
     const queryBuilder: Knex.QueryBuilder<UserRecord, Array<UserRecord>> = this.knex
-      .table<UserRecord>(UserModel.TABLE_NAME)
+      .table<UserRecord>(UserRecord.TABLE_NAME)
       .select(`*`)
 
     for (const [key, value] of Object.entries(args)) {
@@ -46,7 +46,7 @@ export class UsersRepository {
 
   public async readManyByIds(ids: Readonly<Array<number>>): Promise<Array<UserModel>> {
     const users: Array<UserRecord> = await this.knex
-      .table<UserRecord>(UserModel.TABLE_NAME)
+      .table<UserRecord>(UserRecord.TABLE_NAME)
       .select(`*`)
       .whereIn(`id`, ids)
 

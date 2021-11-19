@@ -4,7 +4,7 @@ import { Length } from 'class-validator'
 import { PostConstraints } from '../post.constraints'
 import { PostDescriptions } from '../post.descriptions'
 
-@InputType({ description: `Input used to create a post.` })
+@InputType({ description: CreateOnePostInput.DESCRIPTION })
 export class CreateOnePostInput {
   public static DESCRIPTION: string = `Input used to create a post.`
 
