@@ -1,6 +1,6 @@
 import { Args, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql'
 
-import { Post } from '../posts/post.model'
+import { PostModel } from '../posts/post.model'
 import { PostsService } from '../posts/posts.service'
 import { ReadOneUserArgs } from './args/read-one-user.args'
 import { UserModel } from './user.model'
@@ -18,10 +18,10 @@ export class UsersResolver {
     return this.usersService.readOne(args)
   }
 
-  @ResolveField(`posts`, (): [typeof Post] => [Post], {
+  @ResolveField(`posts`, (): [typeof PostModel] => [PostModel], {
     description: `A list of posts that have been created by the user with the selected ID.`
   })
-  public async readManyPostsByUserId(@Parent() user: UserModel): Promise<Array<Post>> {
+  public async readManyPostsByUserId(@Parent() user: UserModel): Promise<Array<PostModel>> {
     return this.postsService.readAllByUserId({ id: user.id })
   }
 }

@@ -4,36 +4,31 @@ import { Knex } from 'knex'
 import { InjectKnex } from 'nestjs-knex'
 
 import { CreateOnePostInput } from './inputs/create-one-post.input'
-import { Post } from './post.model'
-
-type PostRecord = {
-  content: string
-  id: number
-  title: string
-  user_id: number
-  votes: number | null
-}
+import { PostModel } from './post.model'
+import { PostRecord } from './post.record'
 
 @Injectable()
 export class PostsRepository {
   public constructor(@InjectKnex() private readonly knex: Knex) {}
 
-  public async createOne(args: CreateOnePostInput & { userId: number }): Promise<Post> {
+  public async createOne(args: CreateOnePostInput & { userId: number }): Promise<PostModel> {
     const [post]: Array<PostRecord> = await this.knex
-      .table<PostRecord>(Post.TABLE_NAME)
+      .table<PostRecord>(PostRecord.TABLE_NAME)
       .insert({ content: args.content, title: args.title, user_id: args.userId })
       .returning(`*`)
 
-    return plainToClass(Post, post)
+    const { user_id, ...rest }: PostRecord = post
+
+    return plainToClass(PostModel, { ...rest, userId: user_id })
   }
 
-  public async readMany(): Promise<Array<Post>> {
-    const posts: Array<PostRecord> = await this.knex.table<PostRecord>(Post.TABLE_NAME).select(`*`)
+  public async readMany(): Promise<Array<PostModel>> {
+    const posts: Array<PostRecord> = await this.knex.table<PostRecord>(PostRecord.TABLE_NAME).select(`*`)
 
-    return posts.map((post: PostRecord): Post => {
+    return posts.map((post: PostRecord): PostModel => {
       const { user_id, ...rest }: PostRecord = post
 
-      return plainToClass(Post, { ...rest, userId: user_id })
+      return plainToClass(PostModel, { ...rest, userId: user_id })
     })
   }
 }

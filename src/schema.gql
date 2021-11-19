@@ -4,7 +4,7 @@
 
 """Input used to create a post."""
 input CreateOnePostInput {
-  """Post title. The post title is unique across the application."""
+  """Post content. The user can write anything they want in the post."""
   content: String!
 
   """Post title. The post title is unique across the application."""
@@ -38,7 +38,7 @@ type Mutation {
   createOnePost(
     """Input used to create a post."""
     CreateOnePostInput: CreateOnePostInput!
-  ): Post!
+  ): PostModel!
 
   """A mutation that logs in a user."""
   login(
@@ -60,7 +60,7 @@ type Mutation {
 }
 
 """A model that represents posts added by a user."""
-type Post {
+type PostModel {
   """Post content. The user can write anything they want in the post."""
   content: String!
 
@@ -98,7 +98,7 @@ type Profile {
 
 type Query {
   """The query returns a list of posts according to the given criteria."""
-  posts: [Post!]!
+  posts: [PostModel!]!
 
   """The query returns the user with the selected ID."""
   user(
@@ -188,7 +188,7 @@ type UserModel {
   """
   A list of posts that have been created by the user with the selected ID.
   """
-  posts: [Post!]!
+  posts: [PostModel!]!
 }
 
 """Represents NULL values"""

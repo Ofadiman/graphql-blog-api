@@ -1,6 +1,6 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql'
 
-import { Post } from '../posts/post.model'
+import { PostModel } from '../posts/post.model'
 
 @ObjectType({ description: `A model that represents the user of the application.` })
 export class UserModel {
@@ -25,8 +25,8 @@ export class UserModel {
   @Field((): typeof String => String, { description: UserModel.PASSWORD_DESCRIPTION })
   public password: string
 
-  @Field((): Array<typeof Post> => [Post], { description: UserModel.POSTS_DESCRIPTION })
-  public posts: Array<Post>
+  @Field((): Array<typeof PostModel> => [PostModel], { description: UserModel.POSTS_DESCRIPTION })
+  public posts: Array<PostModel>
 
   public toSerializableObject(): Pick<UserModel, 'email' | 'id' | 'posts'> {
     return {

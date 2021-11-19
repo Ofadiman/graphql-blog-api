@@ -1,17 +1,18 @@
 import { Field, InputType } from '@nestjs/graphql'
 import { Length } from 'class-validator'
 
-import { Post } from '../post.model'
+import { PostConstraints } from '../post.constraints'
+import { PostDescriptions } from '../post.descriptions'
 
 @InputType({ description: `Input used to create a post.` })
 export class CreateOnePostInput {
   public static DESCRIPTION: string = `Input used to create a post.`
 
-  @Field((): typeof String => String, { description: Post.TITLE_DESCRIPTION })
-  @Length(Post.MIN_TITLE_LENGTH, Post.MAX_TITLE_LENGTH)
+  @Field((): typeof String => String, { description: PostDescriptions.TITLE })
+  @Length(PostConstraints.MIN_TITLE_LENGTH, PostConstraints.MAX_TITLE_LENGTH)
   public title: string
 
-  @Field((): typeof String => String, { description: Post.TITLE_DESCRIPTION })
-  @Length(Post.MIN_CONTENT_LENGTH, Post.MAX_CONTENT_LENGTH)
+  @Field((): typeof String => String, { description: PostDescriptions.CONTENT })
+  @Length(PostConstraints.MIN_CONTENT_LENGTH, PostConstraints.MAX_CONTENT_LENGTH)
   public content: string
 }
