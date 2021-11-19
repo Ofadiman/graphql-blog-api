@@ -4,6 +4,7 @@ import { ExtractJwt, Strategy } from 'passport-jwt'
 
 import { UserModel } from '../../users/user.model'
 import { UsersService } from '../../users/users.service'
+import { AuthTokenPayloadType } from '../types/auth-token-payload.type'
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy, `jwt`) {
@@ -15,8 +16,8 @@ export class JwtStrategy extends PassportStrategy(Strategy, `jwt`) {
     })
   }
 
-  public async validate(payload: { user: UserModel }): Promise<UserModel> {
-    const user: UserModel = await this.usersService.readOne({ id: payload.user.id })
+  public async validate(payload: AuthTokenPayloadType): Promise<UserModel> {
+    const user: UserModel = await this.usersService.readOne({ id: payload.userId })
 
     return user
   }

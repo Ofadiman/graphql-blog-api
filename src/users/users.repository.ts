@@ -34,7 +34,7 @@ export class UsersRepository {
       .select(`*`)
 
     for (const [key, value] of Object.entries(args)) {
-      if (this.guardsService.isString(value)) {
+      if (this.guardsService.isString(key) && this.guardsService.isNumber(value)) {
         void queryBuilder.where(key, value)
       }
     }

@@ -11,6 +11,7 @@ import { UsersService } from '../users/users.service'
 import { LoginInput } from './input/login.input'
 import { RegisterInput } from './input/register.input'
 import { LoginResponse } from './objects/login.object'
+import { AuthTokenPayloadType } from './types/auth-token-payload.type'
 
 @Injectable()
 export class AuthService {
@@ -33,7 +34,8 @@ export class AuthService {
       throw new UnauthorizedException()
     }
 
-    const token: string = await this.jwtService.signAsync({ userId: user.id })
+    const tokenPayload: AuthTokenPayloadType = { userId: user.id }
+    const token: string = await this.jwtService.signAsync(tokenPayload)
 
     const profile: ProfileModel = await this.profilesService.getProfileByUserId({ id: user.id })
 
