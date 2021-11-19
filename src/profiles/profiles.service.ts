@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common'
+import { Knex } from 'knex'
 
 import { ProfileModel } from './profile.model'
 import { ProfilesRepository } from './profiles.repository'
@@ -24,8 +25,8 @@ type UpdateOneArgs = {
 export class ProfilesService {
   public constructor(private readonly profilesRepository: ProfilesRepository) {}
 
-  public async createOne(args: CreateOneArgs): Promise<ProfileModel> {
-    return this.profilesRepository.createOne(args)
+  public async createOne(args: CreateOneArgs, transaction?: Knex.Transaction): Promise<ProfileModel> {
+    return this.profilesRepository.createOne(args, transaction)
   }
 
   public async getProfileByUserId(args: GetProfileByUserIdArgs): Promise<ProfileModel> {

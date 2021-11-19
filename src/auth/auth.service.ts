@@ -1,5 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
+import { Knex } from 'knex'
+import { InjectKnex } from 'nestjs-knex'
 
 import { BcryptService } from '../core/providers/bcrypt.service'
 import { ProfileModel } from '../profiles/profile.model'
@@ -16,7 +18,8 @@ export class AuthService {
     private readonly usersService: UsersService,
     private readonly bcryptService: BcryptService,
     private readonly jwtService: JwtService,
-    private readonly profilesService: ProfilesService
+    private readonly profilesService: ProfilesService,
+    @InjectKnex() private readonly knex: Knex
   ) {}
 
   public async login(args: LoginInput): Promise<LoginResponse> {
@@ -40,17 +43,27 @@ export class AuthService {
   public async registerUser(args: RegisterInput): Promise<void> {
     const hashedPassword: string = await this.bcryptService.hash(args.password)
 
-    const userModel: UserModel = await this.usersService.createOne({
-      email: args.email,
-      password: hashedPassword
-    })
+    const transaction: Knex.Transaction = await this.knex.transaction({ isolationLevel: `serializable` })
+
+    const userModel: UserModel = await this.usersService.createOne(
+      {
+        email: args.email,
+        password: hashedPassword
+      },
+      transaction
+    )
 
     const [baseUserName]: Array<string> = args.email.split(`@`)
-    await this.profilesService.createOne({
-      bio: `Your bio should be here.`,
-      photo: `https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png`,
-      userId: userModel.id,
-      username: baseUserName
-    })
+    await this.profilesService.createOne(
+      {
+        bio: `Your bio should be here.`,
+        photo: `https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png`,
+        userId: userModel.id,
+        username: baseUserName
+      },
+      transaction
+    )
+
+    await transaction.commit()
   }
 }

@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common'
+import { Knex } from 'knex'
 
 import { ReadOneUserArgs } from './args/read-one-user.args'
 import { UserNotFoundException } from './exceptions/user-not-found.exception'
@@ -20,8 +21,8 @@ export class UsersService {
     return user
   }
 
-  public async createOne(args: CreateOneUserInput): Promise<UserModel> {
-    const user: UserModel = await this.usersRepository.createOne(args)
+  public async createOne(args: CreateOneUserInput, transaction?: Knex.Transaction): Promise<UserModel> {
+    const user: UserModel = await this.usersRepository.createOne(args, transaction)
 
     return user
   }

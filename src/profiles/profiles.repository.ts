@@ -27,10 +27,11 @@ type ReadOneArgs = {
 export class ProfilesRepository {
   public constructor(@InjectKnex() private readonly knex: Knex) {}
 
-  public async createOne(args: CreateOneArgs): Promise<ProfileModel> {
+  public async createOne(args: CreateOneArgs, transaction?: Knex.Transaction): Promise<ProfileModel> {
+    const queryRunner: Knex = transaction ?? this.knex
     const { userId: user_id, ...rest }: CreateOneArgs = args
 
-    const [profile]: Array<ProfileRecord> = await this.knex
+    const [profile]: Array<ProfileRecord> = await queryRunner
       .table<ProfileRecord>(ProfileRecord.TABLE_NAME)
       .insert({ user_id, ...rest })
       .returning(`*`)

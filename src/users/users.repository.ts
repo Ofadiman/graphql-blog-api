@@ -5,16 +5,22 @@ import { InjectKnex } from 'nestjs-knex'
 
 import { GuardsService } from '../core/providers/guards.service'
 import { ReadOneUserArgs } from './args/read-one-user.args'
-import { CreateOneUserInput } from './inputs/create-one-user.input'
 import { UserModel } from './user.model'
 import { UserRecord } from './user.record'
+
+type CreateOneArgs = {
+  email: string
+  password: string
+}
 
 @Injectable()
 export class UsersRepository {
   public constructor(@InjectKnex() private readonly knex: Knex, private readonly guardsService: GuardsService) {}
 
-  public async createOne(args: CreateOneUserInput): Promise<UserModel> {
-    const [user]: Array<UserRecord> = await this.knex
+  public async createOne(args: CreateOneArgs, transaction?: Knex.Transaction): Promise<UserModel> {
+    const queryRunner: Knex = transaction ?? this.knex
+
+    const [user]: Array<UserRecord> = await queryRunner
       .table<UserRecord>(UserModel.TABLE_NAME)
       .insert(args)
       .returning(`*`)
