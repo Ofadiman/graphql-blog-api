@@ -48,7 +48,7 @@ Functionalities that are available in the application.
   - [x] As a user, I can create a comment.
   - [ ] As a user, I can update the comment I created.
 - **Tags**
-  - [ ] As a user, create a tag.
+  - [ ] As a user, I can create a tag.
   - [ ] As a user, I can tag a post.
 
 ## Architecture
@@ -69,3 +69,136 @@ There are 3 layers in the application, which are `resolvers`, `services` and `re
 - A class with the `Model` ending (`.model.ts` file suffix) denotes a business model used in the application on which additional methods are available to perform business logic.
 - A class with the `Record` ending (`.record.ts` file suffix) denotes an entity stored in the database.
 - A class with the `Response` ending (`.response.ts` file suffix) denotes the response type of GraphQL query or mutation.
+
+## Notes
+
+Various types of notes that are made during the development of the project.
+
+### Creating `One To One` relationship with knex.
+
+To create a one-to-one relationship where one **user** can only have one **profile**, first create the `users` table.
+
+```ts
+export async function up(knex: Knex): Promise<void> {
+  return knex.schema.createTable(`users`, (tableBuilder: Knex.CreateTableBuilder): void => {
+    tableBuilder.increments(`id`)
+    tableBuilder.string(`email`, 255).unique().notNullable()
+  })
+}
+```
+
+This migration creates the `users` table that:
+
+- Contains the `id` column which is automatically marked as the [primary key](https://www.postgresqltutorial.com/postgresql-primary-key/).
+- Contains the `email` column of type string that can be a maximum of 255 characters long, has a `UNIQUE INDEX` created, and cannot take a `NULL` value.
+
+Now you need to create a `profiles` table.
+
+```ts
+export async function up(knex: Knex): Promise<void> {
+  return knex.schema.createTable(`profiles`, (tableBuilder: Knex.TableBuilder): void => {
+    tableBuilder.increments(`id`)
+    tableBuilder.string(`photo`).notNullable()
+    tableBuilder.integer(`user_id`).unique().references(`users.id`)
+  })
+}
+```
+
+This migration creates the `profiles` table that:
+
+- Contains the `id` column which is automatically marked as the [primary key](https://www.postgresqltutorial.com/postgresql-primary-key/).
+- Contains the `photo` column which is an arbitrary column that is used to store urls to profile pictures.
+- Contains the `user_id` column which is a reference to the `id` column in `users` table. This allows you to perform a query with `JOIN` statement. To ensure that a user can only have one profile, the `user_id` column has a `UNIQUE INDEX` that will throw an error if we want to assign 2 profiles to one user.
+
+### Creating `One To Many` relationship with knex.
+
+To create a one-to-many relationship where one **user** can be the author of many **posts**, first create the `users` table.
+
+```ts
+export async function up(knex: Knex): Promise<void> {
+  return knex.schema.createTable(`users`, (tableBuilder: Knex.CreateTableBuilder): void => {
+    tableBuilder.increments(`id`)
+    tableBuilder.string(`email`, 255).unique().notNullable()
+  })
+}
+```
+
+This migration creates the `users` table that:
+
+- Contains the `id` column which is automatically marked as the [primary key](https://www.postgresqltutorial.com/postgresql-primary-key/).
+- Contains the `email` column of type string that can be a maximum of 255 characters long, has a `UNIQUE INDEX` created, and cannot take a `NULL` value.
+
+Now you need to create a `posts` table.
+
+```ts
+export async function up(knex: Knex): Promise<void> {
+  return knex.schema.createTable(`posts`, (tableBuilder: Knex.CreateTableBuilder): void => {
+    tableBuilder.increments(`id`)
+    tableBuilder.string(`title`).unique().notNullable()
+    tableBuilder.string(`content`).notNullable()
+    tableBuilder.integer(`user_id`).references(`users.id`)
+  })
+}
+```
+
+This migration creates the `posts` table that:
+
+- Contains the `id` column which is automatically marked as the [primary key](https://www.postgresqltutorial.com/postgresql-primary-key/).
+- Contains the `title` column which is an arbitrary column that is used to store post title. It has a `UNIQUE INDEX` which assures that there cannot be 2 posts with the same title in the database. The column cannot take `NULL` value due to `.notNullable()` constraint.
+- Contains the `content` column which is an arbitrary column that is used to store post content.
+- Contains the `user_id` column which is a reference to the `id` column in `users` table. This allows you to perform a query with `JOIN` statement. **Important** fact to notice here is that there is no `UNIQUE INDEX` constraint which allows to create many post records that reference the same `user_id`.
+
+### Creating `Many To Many` relationship with knex.
+
+To create a many-to-many relationship where one **post** can have many tags, and one **tag** can be assigned to many posts at the same time, first create the `posts` table.
+
+```ts
+export async function up(knex: Knex): Promise<void> {
+  return knex.schema.createTable(`posts`, (tableBuilder: Knex.CreateTableBuilder): void => {
+    tableBuilder.increments(`id`)
+    tableBuilder.string(`title`).unique().notNullable()
+    tableBuilder.string(`content`).notNullable()
+  })
+}
+```
+
+This migration creates the `posts` table that:
+
+- Contains the `id` column which is automatically marked as the [primary key](https://www.postgresqltutorial.com/postgresql-primary-key/).
+- Contains the `title` column which is an arbitrary column that is used to store post title. It has a `UNIQUE INDEX` which assures that there cannot be 2 posts with the same title in the database. The column cannot take `NULL` value due to `.notNullable()` constraint.
+- Contains the `content` column which is an arbitrary column that is used to store post content.
+
+Now you need to create a `tags` table.
+
+```ts
+export async function up(knex: Knex): Promise<void> {
+  return knex.schema.createTable(`tags`, (tableBuilder: Knex.TableBuilder): void => {
+    tableBuilder.increments(`id`)
+    tableBuilder.string(`name`).unique().notNullable()
+  })
+}
+```
+
+This migration creates the `tags` table that:
+
+- Contains the `id` column which is automatically marked as the [primary key](https://www.postgresqltutorial.com/postgresql-primary-key/).
+- Contains the `name` column which is an arbitrary column that is used to store tag name. It has a `UNIQUE INDEX` which assures that there cannot be 2 posts with the same title in the database. The column cannot take `NULL` value due to `.notNullable()` constraint.
+
+Once you have created both tables, it is time to create a relationship between them.
+
+```ts
+export async function up(knex: Knex): Promise<void> {
+  return knex.schema.createTable(`posts_tags`, (tableBuilder: Knex.TableBuilder): void => {
+    tableBuilder.increments().primary()
+    tableBuilder.integer(`post_id`).unsigned().references(`id`).inTable(`posts`)
+    tableBuilder.integer(`tag_id`).unsigned().references(`id`).inTable(`tags`)
+  })
+}
+```
+
+This migration creates the `posts_tags` table that:
+
+- Contains the `post_id` column which references the `id` column in the `posts` table.
+- Contains the `tag_id` column which references the `id` column in the `tags` table.
+
+This "proxy" table allows you to store the relationship between `posts` and `tags` in your application.
