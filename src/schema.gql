@@ -37,6 +37,12 @@ input CreateOnePostInput {
   title: String!
 }
 
+"""Input used to create a tag."""
+input CreateTagInput {
+  """Tag name."""
+  name: String!
+}
+
 """Input needed to login to the application."""
 input LoginInput {
   """E-mail address."""
@@ -71,6 +77,12 @@ type Mutation {
     """Input used to create a post."""
     CreateOnePostInput: CreateOnePostInput!
   ): PostModel!
+
+  """A mutation that creates a tag."""
+  createTag(
+    """Input used to create a tag."""
+    CreateTagInput: CreateTagInput!
+  ): TagModel!
 
   """A mutation that logs in a user."""
   login(
@@ -157,6 +169,17 @@ input RegisterInput {
   User Password. Password length must be greater than 8 and less than 255 characters.
   """
   password: String!
+}
+
+"""
+A tag is an entity that allows users to assign additional keywords to posts so that other users can more easily search for posts about topics of interest
+"""
+type TagModel {
+  """An identifier that identifies a unique tag."""
+  id: Float!
+
+  """Tag name."""
+  name: String!
 }
 
 """Input used to update a post."""
