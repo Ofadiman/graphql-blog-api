@@ -157,7 +157,10 @@ type Profile {
 
 type Query {
   """The query returns a list of posts according to the given criteria."""
-  posts: [PostModel!]!
+  posts(
+    """Tag IDs that are associated with the post."""
+    tagIds: [Int!]
+  ): [PostModel!]!
 
   """The query returns the user with the selected ID."""
   user(

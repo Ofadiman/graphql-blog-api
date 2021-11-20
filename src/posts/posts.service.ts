@@ -39,8 +39,8 @@ export class PostsService {
     return updatedPost
   }
 
-  public async readMany(): Promise<Array<PostModel>> {
-    return this.postsRepository.readMany()
+  public async readMany(args: { tagIds?: Array<number> }): Promise<Array<PostModel>> {
+    return this.postsRepository.readMany({ tagIds: args.tagIds })
   }
 
   public async readAllByUserId(args: ReadAllByUserIdArgs): Promise<Array<PostModel>> {

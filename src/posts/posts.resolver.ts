@@ -5,6 +5,7 @@ import DataLoader from 'dataloader'
 import { CurrentUser } from '../auth/decorators/current-user.decorator'
 import { UserModel } from '../users/user.model'
 import { UsersService } from '../users/users.service'
+import { PostsArgs } from './args/posts.args'
 import { CreateOnePostInput } from './inputs/create-one-post.input'
 import { UpdateOnePostInput } from './inputs/update-one-post.input'
 import { PostModel, UserInPost } from './post.model'
@@ -62,11 +63,10 @@ export class PostsResolver {
   }
 
   @Query((): Array<typeof PostModel> => [PostModel], {
-    description: `The query returns a list of posts according to the given criteria.`,
-    name: `posts`
+    description: `The query returns a list of posts according to the given criteria.`
   })
-  public async readManyPosts(): Promise<Array<PostModel>> {
-    return this.postsService.readMany()
+  public async posts(@Args({ nullable: true }) args: PostsArgs): Promise<Array<PostModel>> {
+    return this.postsService.readMany({ tagIds: args.tagIds })
   }
 
   @ResolveField(`user`, (): typeof UserInPost => UserInPost)

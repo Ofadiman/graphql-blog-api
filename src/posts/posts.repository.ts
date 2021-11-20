@@ -65,8 +65,23 @@ export class PostsRepository {
     return plainToClass(PostModel, { userId: user_id, ...rest })
   }
 
-  public async readMany(): Promise<Array<PostModel>> {
-    const posts: Array<PostRecord> = await this.knex.table<PostRecord>(PostRecord.TABLE_NAME).select(`*`)
+  public async readMany(args: { tagIds?: Array<number> }): Promise<Array<PostModel>> {
+    const queryBuilder: Knex.QueryBuilder<PostRecord, Array<PostRecord>> = this.knex
+      .table<PostRecord>(PostRecord.TABLE_NAME)
+      .select(`posts.id`)
+      .select(`posts.title`)
+      .select(`posts.content`)
+      .select(`posts.user_id`)
+
+    if (args.tagIds !== undefined) {
+      void queryBuilder
+        .leftJoin(`posts_tags`, `posts.id`, `posts_tags.post_id`)
+        .leftJoin(`tags`, `tags.id`, `posts_tags.tag_id`)
+        .whereIn(`tags.id`, args.tagIds)
+        .groupBy(`posts.id`)
+    }
+
+    const posts: Array<PostRecord> = await queryBuilder
 
     return posts.map((post: PostRecord): PostModel => {
       const { user_id, ...rest }: PostRecord = post

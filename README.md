@@ -43,7 +43,7 @@ Functionalities that are available in the application.
 - **Posts**
   - [x] As a user, I can create a post.
   - [x] As a user, I can update the post I created.
-  - [ ] as a user, I can read posts by tags.
+  - [x] as a user, I can read posts by tags.
 - **Comments**
   - [x] As a user, I can create a comment.
   - [x] As a user, I can update the comment I created.
