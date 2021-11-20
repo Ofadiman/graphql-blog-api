@@ -2,11 +2,18 @@ const execa = require('execa')
 const { DATABASE_ACTIONS } = require('./main.constants')
 const { actionPrompt } = require('./prompts/action.prompt')
 const { migrationNamePrompt } = require('./prompts/migration-name.prompt')
+const { seedNamePrompt } = require('./prompts/seed-name.prompt')
 
 const generateMigrations = async () => {
   const migrationName = await migrationNamePrompt.run()
 
   execa.commandSync(`yarn knex migrate:make ${migrationName} -x ts`)
+}
+
+const createDatabaseSeed = async () => {
+  const seedName = await seedNamePrompt.run()
+
+  execa.commandSync(`yarn knex seed:make ${seedName} -x ts`)
 }
 
 const runMigrations = async () => {
@@ -43,6 +50,11 @@ void (async () => {
 
     case DATABASE_ACTIONS.ROLLBACK_LAST_MIGRATION: {
       await rollbackLastMigration()
+      break
+    }
+
+    case DATABASE_ACTIONS.CREATE_DATABASE_SEED: {
+      await createDatabaseSeed()
       break
     }
 
