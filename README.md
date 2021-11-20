@@ -46,7 +46,7 @@ Functionalities that are available in the application.
   - [ ] as a user, I can read posts by tags.
 - **Comments**
   - [x] As a user, I can create a comment.
-  - [ ] As a user, I can update the comment I created.
+  - [x] As a user, I can update the comment I created.
 - **Tags**
   - [x] As a user, I can create a tag.
   - [x] As a user, I can tag a post.

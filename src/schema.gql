@@ -99,6 +99,12 @@ type Mutation {
     RegisterInput: RegisterInput!
   ): Void
 
+  """A mutation that updates a comment."""
+  updateOneComment(
+    """Input used to update a comment."""
+    UpdateOneCommentInput: UpdateOneCommentInput!
+  ): CommentModel!
+
   """A mutation that updates a post."""
   updateOnePost(
     """Input used to update a post."""
@@ -183,6 +189,15 @@ type TagModel {
 
   """Tag name."""
   name: String!
+}
+
+"""Input used to update a comment."""
+input UpdateOneCommentInput {
+  """The content of the comment added under the post."""
+  content: String!
+
+  """The identifier that identifies a unique comment."""
+  id: Int!
 }
 
 """Input used to update a post."""

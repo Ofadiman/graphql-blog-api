@@ -20,4 +20,27 @@ export class CommentsRepository {
 
     return plainToClass(CommentModel, { ...rest, postId: post_id, userId: user_id })
   }
+
+  public async updateOne(args: { content: string; id: number }): Promise<CommentModel> {
+    const [updatedComment]: Array<CommentRecord> = await this.knex
+      .table<CommentRecord>(CommentRecord.TABLE_NAME)
+      .update({ content: args.content })
+      .where({ id: args.id })
+      .returning(`*`)
+
+    const { user_id, post_id, ...rest }: CommentRecord = updatedComment
+
+    return plainToClass(CommentModel, { postId: post_id, userId: user_id, ...rest })
+  }
+
+  public async readOne(args: { id: number }): Promise<CommentModel> {
+    const [commentRecord]: Array<CommentRecord> = await this.knex
+      .table<CommentRecord>(CommentRecord.TABLE_NAME)
+      .select(`*`)
+      .where({ id: args.id })
+
+    const { user_id, post_id, ...rest }: CommentRecord = commentRecord
+
+    return plainToClass(CommentModel, { ...rest, postId: post_id, userId: user_id })
+  }
 }
