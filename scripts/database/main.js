@@ -13,6 +13,10 @@ const runMigrations = async () => {
   execa.commandSync(`yarn knex migrate:latest`)
 }
 
+const rollbackLastMigration = async () => {
+  execa.commandSync(`yarn knex migrate:rollback`)
+}
+
 const seedDatabase = async () => {
   execa.commandSync(`yarn knex seed:run`)
 }
@@ -34,6 +38,11 @@ void (async () => {
 
     case DATABASE_ACTIONS.SEED_DATABASE: {
       await seedDatabase()
+      break
+    }
+
+    case DATABASE_ACTIONS.ROLLBACK_LAST_MIGRATION: {
+      await rollbackLastMigration()
       break
     }
 
