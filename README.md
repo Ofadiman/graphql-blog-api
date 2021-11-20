@@ -5,21 +5,21 @@ An app that allows users to create blog posts.
 ## Objectives
 
 - [ ] Learn GraphQL.
-  - [ ] How to combine GraphQL with NestJS.
-  - [ ] What are [resolvers](https://docs.nestjs.com/graphql/resolvers).
-  - [ ] What are [mutations](https://docs.nestjs.com/graphql/mutations).
+  - [x] How to combine GraphQL with NestJS.
+  - [x] What are [resolvers](https://docs.nestjs.com/graphql/resolvers).
+  - [x] What are [mutations](https://docs.nestjs.com/graphql/mutations).
   - [ ] What are [subscriptions](https://docs.nestjs.com/graphql/subscriptions).
   - [ ] What are [scalars](https://docs.nestjs.com/graphql/scalars).
   - [ ] What are [directives](https://docs.nestjs.com/graphql/directives).
   - [ ] What are [plugins](https://docs.nestjs.com/graphql/plugins).
   - [ ] What are [field middlewares](https://docs.nestjs.com/graphql/field-middleware) and how to use the with `Code First Approach`.
-  - [ ] What is the `Code First Approach` and how to use it to document the schema.
-  - [ ] What is `data loader` and how to avoid the `N+1 problem`.
+  - [x] What is the `Code First Approach` and how to use it to document the schema.
+  - [x] What is `data loader` and how to avoid the `N+1 problem`.
   - [ ] What is schema [federation](https://docs.nestjs.com/graphql/federation) and how to use it.
 - [ ] Learn [knex](https://www.npmjs.com/package/knex) library basics.
-  - [ ] How to create entities.
-  - [ ] How to create SQL relationships (one to one, one to many, many to many).
-  - [ ] How to create database migrations.
+  - [x] How to create entities.
+  - [x] How to create SQL relationships (one to one, one to many, many to many).
+  - [x] How to create database migrations.
   - [ ] How to create database seeds.
 
 ## Entities
@@ -48,8 +48,8 @@ Functionalities that are available in the application.
   - [x] As a user, I can create a comment.
   - [ ] As a user, I can update the comment I created.
 - **Tags**
-  - [ ] As a user, I can create a tag.
-  - [ ] As a user, I can tag a post.
+  - [x] As a user, I can create a tag.
+  - [x] As a user, I can tag a post.
 
 ## Architecture
 

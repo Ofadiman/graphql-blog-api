@@ -33,6 +33,9 @@ input CreateOnePostInput {
   """Post content. The user can write anything they want in the post."""
   content: String!
 
+  """Tag IDs that are associated with the post."""
+  tagIds: [Int!]
+
   """Post title. The post title is unique across the application."""
   title: String!
 }

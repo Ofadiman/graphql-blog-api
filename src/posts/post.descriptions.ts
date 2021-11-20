@@ -5,4 +5,6 @@ export class PostDescriptions {
   public static ID: string = `An identifier that identifies a unique post.`
   public static TITLE: string = `Post title. The post title is unique across the application.`
   public static VOTES: string = `The number of votes that were cast for the selected post by the users of the application.`
+
+  public static TAG_IDS: string = `Tag IDs that are associated with the post.`
 }

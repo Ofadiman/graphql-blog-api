@@ -1,5 +1,5 @@
-import { Field, InputType } from '@nestjs/graphql'
-import { Length } from 'class-validator'
+import { Field, InputType, Int, ReturnTypeFuncValue } from '@nestjs/graphql'
+import { IsOptional, Length } from 'class-validator'
 
 import { PostConstraints } from '../post.constraints'
 import { PostDescriptions } from '../post.descriptions'
@@ -15,4 +15,8 @@ export class CreateOnePostInput {
   @Field((): typeof String => String, { description: PostDescriptions.CONTENT })
   @Length(PostConstraints.MIN_CONTENT_LENGTH, PostConstraints.MAX_CONTENT_LENGTH)
   public content: string
+
+  @Field((): ReturnTypeFuncValue => [Int], { description: PostDescriptions.TAG_IDS, nullable: true })
+  @IsOptional()
+  public tagIds?: Array<number>
 }
