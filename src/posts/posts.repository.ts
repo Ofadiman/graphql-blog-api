@@ -65,13 +65,17 @@ export class PostsRepository {
     return plainToClass(PostModel, { userId: user_id, ...rest })
   }
 
-  public async readMany(args: { tagIds?: Array<number> }): Promise<Array<PostModel>> {
+  public async readMany(args: { tagIds?: Array<number>; userId?: number }): Promise<Array<PostModel>> {
     const queryBuilder: Knex.QueryBuilder<PostRecord, Array<PostRecord>> = this.knex
       .table<PostRecord>(PostRecord.TABLE_NAME)
       .select(`posts.id`)
       .select(`posts.title`)
       .select(`posts.content`)
       .select(`posts.user_id`)
+
+    if (args.userId !== undefined) {
+      void queryBuilder.where(`user_id`, args.userId)
+    }
 
     if (args.tagIds !== undefined) {
       void queryBuilder

@@ -281,9 +281,7 @@ type UserModel {
   """
   password: String!
 
-  """
-  A list of posts that have been created by the user with the selected ID.
-  """
+  """Posts that were written by the selected user."""
   posts: [PostModel!]!
 }
 

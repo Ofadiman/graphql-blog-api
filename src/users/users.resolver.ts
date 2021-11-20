@@ -18,10 +18,10 @@ export class UsersResolver {
     return this.usersService.readOne(args)
   }
 
-  @ResolveField(`posts`, (): [typeof PostModel] => [PostModel], {
+  @ResolveField((): [typeof PostModel] => [PostModel], {
     description: `A list of posts that have been created by the user with the selected ID.`
   })
-  public async readManyPostsByUserId(@Parent() user: UserModel): Promise<Array<PostModel>> {
-    return this.postsService.readAllByUserId({ id: user.id })
+  public async posts(@Parent() user: UserModel): Promise<Array<PostModel>> {
+    return this.postsService.readMany({ userId: user.id })
   }
 }
