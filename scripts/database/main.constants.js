@@ -1,7 +1,5 @@
 exports.DATABASE_ACTIONS = {
-  CREATE_DATABASE_SEED: `Create a file containing database seed.`,
-  GENERATE_MIGRATIONS: `Generate Migrations`,
-  ROLLBACK_LAST_MIGRATION: `Rollback Last Migration`,
-  RUN_MIGRATION: `Run Migrations`,
-  SEED_DATABASE: `Seed Database`
+  MIGRATIONS_CREATE: `[Migration] Create a migration.`,
+  MIGRATIONS_ROLLBACK_LAST: `[Migration] Rollback last migration.`,
+  MIGRATIONS_RUN_ALL_PENDING: `[Migration] Run all pending migrations.`
 }

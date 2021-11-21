@@ -17,7 +17,7 @@ export const knexConfig: Knex.Config = {
     user: `postgres`
   },
   // Logs all queries to the database.
-  debug: true,
+  debug: false,
   migrations: {
     directory: `src/database/migrations`,
     tableName: `migrations`

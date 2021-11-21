@@ -16,11 +16,11 @@ An app that allows users to create blog posts.
   - [x] What is the `Code First Approach` and how to use it to document the schema.
   - [x] What is `data loader` and how to avoid the `N+1 problem`.
   - [ ] What is schema [federation](https://docs.nestjs.com/graphql/federation) and how to use it.
-- [ ] Learn [knex](https://www.npmjs.com/package/knex) library basics.
+- [x] Learn [knex](https://www.npmjs.com/package/knex) library basics.
   - [x] How to create entities.
   - [x] How to create SQL relationships (one to one, one to many, many to many).
   - [x] How to create database migrations.
-  - [ ] How to create database seeds.
+  - [x] How to create database seeds.
 
 ## Entities
 
