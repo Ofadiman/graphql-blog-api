@@ -4,18 +4,18 @@ An app that allows users to create blog posts.
 
 ## Objectives
 
-- [ ] Learn GraphQL.
+- [x] Learn GraphQL.
   - [x] How to combine GraphQL with NestJS.
   - [x] What are [resolvers](https://docs.nestjs.com/graphql/resolvers).
   - [x] What are [mutations](https://docs.nestjs.com/graphql/mutations).
-  - [ ] What are [subscriptions](https://docs.nestjs.com/graphql/subscriptions).
-  - [ ] What are [scalars](https://docs.nestjs.com/graphql/scalars).
-  - [ ] What are [directives](https://docs.nestjs.com/graphql/directives).
-  - [ ] What are [plugins](https://docs.nestjs.com/graphql/plugins).
-  - [ ] What are [field middlewares](https://docs.nestjs.com/graphql/field-middleware) and how to use the with `Code First Approach`.
+  - [x] What are [subscriptions](https://docs.nestjs.com/graphql/subscriptions).
+  - [x] What are [scalars](https://docs.nestjs.com/graphql/scalars).
+  - [x] What are [directives](https://docs.nestjs.com/graphql/directives).
+  - [x] What are [plugins](https://docs.nestjs.com/graphql/plugins).
+  - [x] What are [field middlewares](https://docs.nestjs.com/graphql/field-middleware) and how to use the with `Code First Approach`.
   - [x] What is the `Code First Approach` and how to use it to document the schema.
   - [x] What is `data loader` and how to avoid the `N+1 problem`.
-  - [ ] What is schema [federation](https://docs.nestjs.com/graphql/federation) and how to use it.
+  - [x] What is schema [federation](https://docs.nestjs.com/graphql/federation) and how to use it.
 - [x] Learn [knex](https://www.npmjs.com/package/knex) library basics.
   - [x] How to create entities.
   - [x] How to create SQL relationships (one to one, one to many, many to many).
@@ -202,3 +202,52 @@ This migration creates the `posts_tags` table that:
 - Contains the `tag_id` column which references the `id` column in the `tags` table.
 
 This "proxy" table allows you to store the relationship between `posts` and `tags` in your application.
+
+### The N+1 problem
+
+The `N+1` problem is a situation when our application makes many queries to the database that look exactly **the same**. A typical example of this problem is an application where a user can create posts, and we provide an API where the application client can retrieve a list of posts along with the authors. The `N+1` problem can appear when we try to fetch nested, related data (e.g. a list of posts with authors).
+
+```graphql
+query Posts {
+  posts {
+    title
+    id
+    content
+    author {
+      email
+      id
+    }
+  }
+}
+```
+
+If we try to retrieve 20 posts, while they are all written by the same user, and the resolver responsible for `author` field is performing a `SELECT` statement based on `author_id` from `post` entity, we will run the same query 20 times (1 time for each post).
+
+There are 2 potential ways of solving the `N+1` problem. Both approaches have their pros and cons, so you should determine for yourself which approach is more appropriate for your particular case. To read more about particular implementation check out [this blog post](https://wanago.io/2021/02/08/api-nestjs-n-1-problem-graphql/).
+
+#### Data loader
+
+Dataloader is a class/function that is designed to fetch records in batches (i.e. using `IN` statements). You can use [dataloader](https://www.npmjs.com/package/dataloader) library.
+
+- **Pros**
+  - Decreased CPU usage on the database server when the client application does not need data from nested relationship (we do not perform unnecessary `JOIN` operation).
+  - Decreased cost when the client application does not need data from nested relationship (we send less data over the wire, and cloud providers typically charge for network usage).
+  - Decreased response time when the client application does not need data from nested relationship (we do not perform unnecessary `JOIN` operation).
+- **Cons**
+  - Increased response when the client application needs data from nested relationship (we must run 2 separate database queries).
+
+#### `JOIN` statement
+
+A `JOIN` statement is a database operation that allows you to retrieve related records. To read more about `JOIN` statements check out [postgresqltutorial](https://www.postgresqltutorial.com/postgresql-joins/).
+
+- **Pros**
+  - Decreased response time when the client application needs data from nested relationship (we are already running `JOIN` operation in a single query).
+- **Cons**
+  - Increased CPU usage on the database server when the client application does not need data from nested relationship (we are running unnecessary `JOIN` operation).
+  - Increased cost when the client application does not need data from nested relationship (we send more data over the wire, and cloud providers typically charge for network usage).
+  - Increased response time when the client application does not need data from nested relationship (we are running unnecessary `JOIN` operation).
+
+### Subscriptions
+
+Subscriptions allow you to listen to events that are happening in the application in real time. Usually, subscriptions in GraphQL are implemented with WebSockets. To learn more about subscriptions read [this post](https://wanago.io/2021/02/15/api-nestjs-real-time-graphql-subscriptions/) describing how they work and how they are used in NestJS, or refer to the [framework's official documentation](https://docs.nestjs.com/graphql/subscriptions).
+

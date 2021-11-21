@@ -12,12 +12,16 @@ import { PostModel, UserInPost } from './post.model'
 import { PostsService } from './posts.service'
 
 /**
- * For some reasons, this loader cannot be in a file other than PostsResolver, otherwise the reflect-metadata library throws errors.
+ * The CRUCIAL thing to understand with the DataLoader is that it should be initialized once per request.
  */
 @Injectable({ scope: Scope.REQUEST })
 export class PostsLoaders {
   public constructor(private readonly usersService: UsersService) {}
 
+  /**
+   * An IMPORTANT thing to remember that the order of the results in `SELECT IN` statement is not guaranteed.
+   * The results that we return from our DataLoader MUST to be in the same order as the ids. Therefore, we need to map them to ensure that.
+   */
   public readonly batchAuthors: DataLoader<number, UserModel> = new DataLoader(
     async (ids: Readonly<Array<number>>): Promise<Array<Error | UserModel>> => {
       const users: Array<UserModel> = await this.usersService.readManyByIds(ids)
